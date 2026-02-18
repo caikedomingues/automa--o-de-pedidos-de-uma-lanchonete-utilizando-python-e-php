@@ -1,0 +1,14 @@
+MANIFEST.in
+README.md
+VERSION
+requirements.txt
+setup.py
+lanchonete/__init__.py
+lanchonete/__main__.py
+lanchonete/bot.py
+lanchonete.egg-info/PKG-INFO
+lanchonete.egg-info/SOURCES.txt
+lanchonete.egg-info/dependency_links.txt
+lanchonete.egg-info/requires.txt
+lanchonete.egg-info/top_level.txt
+lanchonete/resources/start.png
