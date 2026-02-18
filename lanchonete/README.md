@@ -1,6 +1,6 @@
 # lanchonete
 
-Python package for a BotCity bot.
+sistema de gerenciamento de pedidos de uma lanchonete
 
 ## WARNING
 

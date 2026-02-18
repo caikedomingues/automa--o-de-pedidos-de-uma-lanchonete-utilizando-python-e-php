@@ -1,14 +1,14 @@
 Metadata-Version: 2.1
 Name: lanchonete
 Version: 1.0
-Summary: Python package for a BotCity bot.
+Summary: sistema de gerenciamento de pedidos de uma lanchonete
 Description-Content-Type: text/markdown
 Requires-Dist: botcity-framework-core<2.0,>=1.2.1
 Requires-Dist: botcity-maestro-sdk<1.0,>=0.5.1
 
 # lanchonete
 
-Python package for a BotCity bot.
+sistema de gerenciamento de pedidos de uma lanchonete
 
 ## WARNING
 

@@ -20,7 +20,7 @@ with open(path.join(here, 'requirements.txt')) as requirements_file:
 setup(
     name="lanchonete",
     version=version,
-    description="Python package for a BotCity bot.",
+    description="sistema de gerenciamento de pedidos de uma lanchonete",
     long_description=readme,
     long_description_content_type='text/markdown',
     packages=find_packages(exclude=['docs', 'tests']),
