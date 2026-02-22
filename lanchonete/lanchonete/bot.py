@@ -1,4 +1,5 @@
 
+
 from botcity.core import DesktopBot
 
 
@@ -7,34 +8,85 @@ class Bot(DesktopBot):
       
        while True:  
             # Searching for element 'nova_mensagem '
-            if self.find("nova_mensagem", matching=0.97, waiting_time=10000):
-                    print("nova mensagem encontrada")
-                    
-                    self.click()
-                            
-                    self.paste("Ola, por favor, digite sua mensagem aqui")
-                            
-                    # Searching for element 'enviar_mensagem '
-                    if self.find("enviar_mensagem", matching=0.97, waiting_time=10000):
-                            print("Mensagem Enviada")
-                            self.click()
-                    
-                    # Searching for element 'resposta_cliente '
-                    if self.find("resposta_cliente", matching=0.97, waiting_time=10000):
-                        
-                        pass
+            
+            nova_mensagem = self.find("nova_mensagem", matching=0.97, waiting_time=10000)
+            
+            if nova_mensagem:
+                
+                self.click()
+                
+                # Searching for element 'mensagem_cliente '
+                if not self.find("mensagem_cliente", matching=0.97, waiting_time=10000):
+                    self.not_found("mensagem_cliente")
+                self.click()
+                
+                self.right_click()
+                
+                # Searching for element 'botao_copiar '
+                if not self.find("botao_copiar", matching=0.97, waiting_time=10000):
+                    self.not_found("botao_copiar")
+                self.click()
+                
+                
+                mensagem_cliente = self.get_clipboard().strip().lower()
+                
+                print(mensagem_cliente)
+                
+                
+                
 
+                
+               
+                    
+                
+                    
+              
+            
+            else:
+                
+                print("Não há novas mensagens")
+                    
+                     
+                         
+                        
+                      
+                    
+                            
+                        
+                            
+                   
+                    
+                    
+                        
                         
                     
-                    
-
-       
+                   
+                        
     def not_found(self, label):
         print(f"Element not found: {label}")
 
 
 if __name__ == '__main__':
     Bot.main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
