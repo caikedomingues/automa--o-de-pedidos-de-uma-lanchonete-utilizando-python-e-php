@@ -8,7 +8,6 @@ class Bot(DesktopBot):
       
        while True:  
             # Searching for element 'nova_mensagem '
-            
             nova_mensagem = self.find("nova_mensagem", matching=0.97, waiting_time=10000)
             
             if nova_mensagem:
@@ -18,49 +17,74 @@ class Bot(DesktopBot):
                 # Searching for element 'mensagem_cliente '
                 if not self.find("mensagem_cliente", matching=0.97, waiting_time=10000):
                     self.not_found("mensagem_cliente")
+                
                 self.click()
                 
                 self.right_click()
                 
                 # Searching for element 'botao_copiar '
-                if not self.find("botao_copiar", matching=0.97, waiting_time=10000):
+                if not self.find("botao_copiar", matching=0.8, waiting_time=10000):
                     self.not_found("botao_copiar")
                 self.click()
                 
-                
-                mensagem_cliente = self.get_clipboard().strip().lower()
-                
-                print(mensagem_cliente)
+                texto_mensagem = self.get_clipboard().strip().lower()
                 
                 
+                lista_pedidos = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
                 
-
+                lista_saudacoes = ["bom dia", "boa tarde", "boa noite", "ola", "olá", "oi", "opa"]
                 
-               
+                
+                if texto_mensagem in lista_saudacoes:
+                    
+                     # Searching for element 'campo_mensagem '
+                    if not self.find("campo_mensagem", matching=0.8, waiting_time=10000):
+                        self.not_found("campo_mensagem")
+                    self.click()
+                            
+                    self.paste(f"Ola, escolha uma das nossas opções: {lista_pedidos}")
+                    
+                    if not self.find("enviar_mensagem", matching=0.8, waiting_time=10000):
+                                self.not_found("enviar_mensagem")
+                    self.click()
+                    
+                    self.key_esc()
+                          
+                elif texto_mensagem in lista_pedidos:
+                    
+                    if not self.find("campo_mensagem", matching=0.8, waiting_time=10000):
+                            self.not_found("campo_mensagem")
+                    self.click()
+                    
+                    self.paste("Pedido realizado com sucesso")
+                    
+                    # Searching for element 'enviar_mensagem '
+                    if not self.find("enviar_mensagem", matching=0.8, waiting_time=10000):
+                            self.not_found("enviar_mensagem")
+                    self.click()
+                    
+                    self.key_esc()
+                    
+                else:
+                    
+                     if not self.find("campo_mensagem", matching=0.8, waiting_time=10000):
+                            self.not_found("campo_mensagem")
+                     self.click()
+                     
+                     self.paste("Não entendi a solicitação, por favor, mande um 'ola' e reinicie a conversa")
+                     
+                     # Searching for element 'enviar_mensagem '
+                     if not self.find("enviar_mensagem", matching=0.8, waiting_time=10000):
+                            self.not_found("enviar_mensagem")
+                     self.click()
+                     
+                     self.key_esc()
                     
                 
-                    
-              
-            
             else:
                 
                 print("Não há novas mensagens")
-                    
-                     
-                         
-                        
-                      
-                    
-                            
-                        
-                            
-                   
-                    
-                    
-                        
-                        
-                    
-                   
+                             
                         
     def not_found(self, label):
         print(f"Element not found: {label}")
@@ -68,6 +92,17 @@ class Bot(DesktopBot):
 
 if __name__ == '__main__':
     Bot.main()
+
+
+
+
+
+
+
+
+
+
+
 
 
 
