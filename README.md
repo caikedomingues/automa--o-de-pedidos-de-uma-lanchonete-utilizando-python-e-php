@@ -37,16 +37,16 @@ estilizações de páginas.
                                         Tabelas
 -> pedidos: código_pedido(primary key), produto_pedido (ira conter os produtos que o cliente escolheu), dono_pedido, cpf_entregador, nome_entregador, status_entrega (Ira informar se o pedido ja foi ou não entregue), total_pedido (valor total da compra), data_pedido.
 
--> entregadores: cpf_entregador(primary key), nome_entregador, telefone_entregador, veiculo, foto_entregador(ira conter o caminho da foto do entregador) senha_entregador, quantidade_pedidos_feitos.
+-> entregadores: cpf_entregador(primary key), nome_entregador, telefone_entregador, veiculo, foto_entregador(ira conter o caminho da foto do entregador), senha_entregador, quantidade_pedidos_feitos.
 
--> produtos: id(primary key), nome, preco, estoque, categoria (lanches, salgados, porções, bebidas, sobremesas).
+-> produtos: id(primary key), nome, preco, categoria (lanches, salgados, porções, bebidas, sobremesas).
 
 
                                         Regras de Negócio
 
 -> Para acessar o sistema o administrador deverá fornecer um login e senha.
 
--> Somente o entregador poderá mudar o status das entregas.
+-> Somente o entregador poderá mudar o status das entregas (só a partir disso iremos atribuir uma entrega a mais na coluna de quantidade de pedidos feitos).
 
 -> Para mudar o status da entrega o entregador devera logar no sistema usando o seu cpf e senha
 
@@ -61,9 +61,6 @@ estilizações de páginas.
 -> O cliente devera escolher os ids dos produtos que ele quer comprar
 
 -> O sistema deve verificar se o produto escolhido pelo cliente está presente no estoque
-
--> Caso o produto não esteja mais disponivel, o sistema deve informar ao cliente que não há mais
-itens no estoque (durante a conversa no whatsapp)
 
 -> Somente o administrador poderá excluir produtos do sistema.
 

@@ -50,7 +50,7 @@ class Bot(DesktopBot):
                     
                     self.key_esc()
                           
-                elif texto_mensagem in lista_pedidos:
+                elif any(opcao in texto_mensagem for opcao in lista_pedidos):
                     
                     if not self.find("campo_mensagem", matching=0.8, waiting_time=10000):
                             self.not_found("campo_mensagem")
