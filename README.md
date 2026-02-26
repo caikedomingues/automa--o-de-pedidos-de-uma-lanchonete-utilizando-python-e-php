@@ -60,19 +60,13 @@ estilizações de páginas.
 
 -> O cliente devera escolher os ids dos produtos que ele quer comprar
 
--> O sistema deve verificar se o produto escolhido pelo cliente está presente no estoque
-
 -> Somente o administrador poderá excluir produtos do sistema.
-
--> Somente o administrador podera atualizar o estoque dos produtos.
 
 -> Somente o administrador poderá visualizar todos os pedidos e seus status
 
--> O administrador poderá ver o nome e o telefone de todos os entregadores
+-> O administrador poderá ver as informações de todos os entregadores
 
--> O administrador poderá ver as informações sobre os produtos cadastrados
-
--> O sistema deve validar se a entrada do usuário contém apenas números e vírgulas antes de registrar o pedido.
+-> O administrador poderá ver as informações sobre os produtos cadastrados.
 
 -> O cliente deve receber o codigo ao finalizar o pedido com o objetivo
 de informa-lo ao entregador.
@@ -91,8 +85,6 @@ de informa-lo ao entregador.
 -> tela de cadastro de produtos
 
 -> Tela ou botão de exclusão de produtos.
-
--> Tela ou botão de atualização de estoque
 
 -> Tela de informações de produtos
 
