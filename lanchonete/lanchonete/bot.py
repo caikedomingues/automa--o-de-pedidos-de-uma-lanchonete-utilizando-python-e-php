@@ -3,10 +3,27 @@
 from botcity.core import DesktopBot
 
 
+
+    
+
+
 class Bot(DesktopBot):
     def action(self, execution=None):
-      
-       while True:  
+        
+        def campo_mensagem():
+            # Searching for element 'campo_mensagem'
+            if not self.find("campo_mensagem", matching=0.8, waiting_time=10000):
+                self.not_found("campo_mensagem")
+            self.click()
+        
+        def enviar_mensagem():
+            
+            if not self.find("enviar_mensagem", matching=0.8, waiting_time=10000):
+                self.not_found("enviar_mensagem")
+            self.click()
+            
+                  
+        while True:  
             # Searching for element 'nova_mensagem '
             nova_mensagem = self.find("nova_mensagem", matching=0.97, waiting_time=10000)
             
@@ -38,45 +55,38 @@ class Bot(DesktopBot):
                 if texto_mensagem in lista_saudacoes:
                     
                      # Searching for element 'campo_mensagem '
-                    if not self.find("campo_mensagem", matching=0.8, waiting_time=10000):
-                        self.not_found("campo_mensagem")
-                    self.click()
-                            
+                    campo_mensagem()
+                    
                     self.paste(f"Ola, escolha uma das nossas opções: {lista_pedidos}")
                     
-                    if not self.find("enviar_mensagem", matching=0.8, waiting_time=10000):
-                                self.not_found("enviar_mensagem")
-                    self.click()
-                    
+                    enviar_mensagem()
                     self.key_esc()
                           
                 elif any(opcao in texto_mensagem for opcao in lista_pedidos):
                     
-                    if not self.find("campo_mensagem", matching=0.8, waiting_time=10000):
-                            self.not_found("campo_mensagem")
-                    self.click()
+                    for id_produto in lista_pedidos:
+                        
+                        if id_produto in texto_mensagem:
+                            
+                            print("Ids encontrados: ", id_produto)
+                    
+                    campo_mensagem()
                     
                     self.paste("Pedido realizado com sucesso")
                     
                     # Searching for element 'enviar_mensagem '
-                    if not self.find("enviar_mensagem", matching=0.8, waiting_time=10000):
-                            self.not_found("enviar_mensagem")
-                    self.click()
+                    enviar_mensagem()
                     
                     self.key_esc()
                     
                 else:
                     
-                     if not self.find("campo_mensagem", matching=0.8, waiting_time=10000):
-                            self.not_found("campo_mensagem")
-                     self.click()
+                     campo_mensagem()
                      
                      self.paste("Não entendi a solicitação, por favor, mande um 'ola' e reinicie a conversa")
                      
                      # Searching for element 'enviar_mensagem '
-                     if not self.find("enviar_mensagem", matching=0.8, waiting_time=10000):
-                            self.not_found("enviar_mensagem")
-                     self.click()
+                     enviar_mensagem()
                      
                      self.key_esc()
                     

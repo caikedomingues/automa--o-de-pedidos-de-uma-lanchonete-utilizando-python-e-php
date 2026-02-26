@@ -39,7 +39,7 @@ estilizações de páginas.
 
 -> entregadores: cpf_entregador(primary key), nome_entregador, telefone_entregador, veiculo, foto_entregador(ira conter o caminho da foto do entregador), senha_entregador, quantidade_pedidos_feitos.
 
--> produtos: id(primary key), nome, preco, categoria (lanches, salgados, porções, bebidas, sobremesas).
+-> produtos: id(primary key), nome, preco, categoria (lanches, salgados, porções, bebidas, sobremesas), quantidade_vendas (ira conter a quantidade de vezes que o produto foi vendido).
 
 
                                         Regras de Negócio
