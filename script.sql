@@ -78,7 +78,7 @@ create table pedidos(
 	
 )default charset = utf8;
 
-# Ira adicionar a tabela de quantidade de vendas dos produtos.
+# Ira adicionar a coluna de quantidade de vendas dos produtos.
 alter table produtos add column quantidade_vendas int;
 
 # Iremos transformar a coluna de produtos pedidos em uma coluna int
@@ -89,8 +89,17 @@ alter table pedidos modify produto_pedido int not null;
 ALTER TABLE pedidos ADD CONSTRAINT fk_produto_pedido FOREIGN KEY (produto_pedido) 
 REFERENCES produtos(id_produto);
 
-# Adicionei a tabela de endereço na tabela de pedidos.
+# Adicionei a coluna de endereço na tabela de pedidos.
 alter table pedidos add column endereco varchar(255);
 
 # Irá descrever as colunas da tabela entregadores.
 describe entregadores;
+
+describe produtos;
+# Vamos inserir dados no banco para testar o envio das opções para o cliente voa whatsapp.
+insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('Hamburguer', 28.90, 'lanches', 1 );
+insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('Batata Frita', 14.00, 'porções', 4 );
+insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('coxinha', 1.00, 'salgados', 1 );
+
+select * from produtos;
+
