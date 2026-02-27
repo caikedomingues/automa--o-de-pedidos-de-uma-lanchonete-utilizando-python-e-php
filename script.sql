@@ -38,7 +38,7 @@ create table produtos(
     # Ira conter o preço do produto
     preco float,
     
-    # Ira conter o tipo do produto ((lanches, salgados, porções, bebidas, sobremesas)
+    # Ira conter o tipo do produto (lanches, salgados, porções, bebidas, sobremesas)
     categoria varchar(255),
     
     # Ira identificar a chave primária da tabela de produtos.
@@ -97,9 +97,11 @@ describe entregadores;
 
 describe produtos;
 # Vamos inserir dados no banco para testar o envio das opções para o cliente voa whatsapp.
+# categorias válidas: lanches, salgados, porções, bebidas, sobremesas
 insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('Hamburguer', 28.90, 'lanches', 1 );
 insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('Batata Frita', 14.00, 'porções', 4 );
 insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('coxinha', 1.00, 'salgados', 1 );
+insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('misto quente', 15.90, 'lanches', 8 );
 
 select * from produtos;
 

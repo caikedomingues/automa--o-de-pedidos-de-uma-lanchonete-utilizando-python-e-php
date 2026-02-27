@@ -52,7 +52,7 @@ class Bot(DesktopBot):
                      # Searching for element 'campo_mensagem '
                     campo_mensagem()
                     
-                    self.paste(f"Ola, escolha uma das nossas opções: {lista_pedidos}")
+                    self.paste(f"Ola, escolha os numeros dos produtos que deseja pedir: {lista_pedidos}")
                     
                     enviar_mensagem()
                     self.key_esc()
@@ -64,7 +64,23 @@ class Bot(DesktopBot):
                         if id_produto in texto_mensagem:
                             
                             print("Ids encontrados: ", id_produto)
-                                        
+                    
+                    campo_mensagem()
+                    
+                    self.paste("Informe o seu cpf:")
+                    
+                    enviar_mensagem()
+                    
+                    self.key_esc()
+                    
+                    campo_mensagem()
+                    
+                    self.paste("informe o seu endereço")
+                    
+                    enviar_mensagem()
+                    
+                    self.key_esc()
+                                                        
                     campo_mensagem()
                     
                     self.paste("obrigado, pedido realizado com sucesso")
