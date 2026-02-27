@@ -75,5 +75,30 @@ def consultarprodutos():
     # A função ira retornar a mensagem formatada com os valores
     # do banco de dados.
     return mensagem
+    
+
+def lista_ids():
+    
+    conexao = conectarBancoAutomacao()
+    
+    cursor = conexao.cursor()
+    
+    consulta_id = "SELECT id_produto from produtos"
+    
+    cursor.execute(consulta_id)
+    
+    ids = cursor.fetchall()
+    
+    lista_ids = []
+    
+    for itens in ids:
         
+        
+        lista_ids.append(str(itens[0]))
+    
+    
+    return lista_ids
+    
+    
+
         

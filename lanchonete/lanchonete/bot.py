@@ -44,26 +44,32 @@ class Bot(DesktopBot):
                 
                 lista_saudacoes = ["bom dia", "boa tarde", "boa noite", "ola", "olá", "oi", "opa"]
                 
-                lista_pedidos = BancoAutomacao.consultarprodutos()    
+                lista_pedidos = BancoAutomacao.lista_ids()    
 
+                mensagem_sistema = BancoAutomacao.consultarprodutos()
                 
                 if texto_mensagem in lista_saudacoes:
                     
                      # Searching for element 'campo_mensagem '
                     campo_mensagem()
                     
-                    self.paste(f"Ola, escolha os numeros dos produtos que deseja pedir: {lista_pedidos}")
+                    self.paste(f"Ola, escolha os numeros dos produtos que deseja pedir: {mensagem_sistema}")
                     
                     enviar_mensagem()
                     self.key_esc()
                           
                 elif any(opcao in texto_mensagem for opcao in lista_pedidos):
                     
+                    palavras_mensagens = texto_mensagem.split()
+                    
+                    ids_escolhidos = []
                     for id_produto in lista_pedidos:
                         
-                        if id_produto in texto_mensagem:
+                        if id_produto in palavras_mensagens:
                             
-                            print("Ids encontrados: ", id_produto)
+                            ids_escolhidos.append(id_produto)
+                            
+                    print("Ids encontrados: ", ids_escolhidos)
                     
                     campo_mensagem()
                     
