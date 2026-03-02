@@ -7,6 +7,9 @@ import BancoAutomacao
 class Bot(DesktopBot):
     def action(self, execution=None):
         
+        
+        self.status_atendimento = "Inicio atendimento"
+        
         def campo_mensagem():
             # Searching for element 'campo_mensagem'
             if not self.find("campo_mensagem", matching=0.8, waiting_time=10000):
@@ -18,6 +21,34 @@ class Bot(DesktopBot):
             if not self.find("enviar_mensagem", matching=0.8, waiting_time=10000):
                 self.not_found("enviar_mensagem")
             self.click()
+        
+        def pegar_cpf():
+            
+            if not self.find("campo_mensagem", matching=0.8, waiting_time=10000):
+                self.not_found("campo_mensagem")
+            self.click()
+            
+            self.paste("Informe o seu cpf para localizarmos o seu pedido")
+            
+            if not self.find("enviar_mensagem", matching=0.8, waiting_time=10000):
+                self.not_found("enviar_mensagem")
+            self.click()
+            
+        
+        def pegar_endereco():
+            
+            if not self.find("campo_mensagem", matching=0.8, waiting_time=10000):
+                self.not_found("campo_mensagem")
+            self.click()
+            
+            self.paste("Informe o seu endereço")
+            
+            if not self.find("enviar_mensagem", matching=0.8, waiting_time=10000):
+                self.not_found("enviar_mensagem")
+            self.click()
+            
+            
+            
                           
         while True:  
             # Searching for element 'nova_mensagem '
@@ -48,51 +79,75 @@ class Bot(DesktopBot):
 
                 mensagem_sistema = BancoAutomacao.consultarprodutos()
                 
-                if texto_mensagem in lista_saudacoes:
+                
+                if self.status_atendimento == "Inicio atendimento":
                     
-                     # Searching for element 'campo_mensagem '
-                    campo_mensagem()
+                    if texto_mensagem in lista_saudacoes:
                     
-                    self.paste(f"Ola, escolha os numeros dos produtos que deseja pedir: {mensagem_sistema}")
+                        # Searching for element 'campo_mensagem '
+                        campo_mensagem()
                     
-                    enviar_mensagem()
-                    self.key_esc()
-                          
-                elif any(opcao in texto_mensagem for opcao in lista_pedidos):
+                        self.paste(f"Ola, escolha os numeros dos produtos que deseja pedir: {mensagem_sistema}")
                     
-                    palavras_mensagens = texto_mensagem.split()
-                    
-                    ids_escolhidos = []
-                    for id_produto in lista_pedidos:
+                        enviar_mensagem()
                         
-                        if id_produto in palavras_mensagens:
+                        self.key_esc()
+                        
+                        self.wait(1000)
+                        
+                    self.status_atendimento = "Aguardando pedido"
+                
+                elif self.status_atendimento == "Aguardando pedido":
+                    
+                     if any(opcao in texto_mensagem for opcao in lista_pedidos):
+                    
+                        palavras_mensagens = texto_mensagem.split()
+                        
+                        ids_escolhidos = []
+                        for id_produto in lista_pedidos:
                             
-                            ids_escolhidos.append(id_produto)
-                            
-                    print("Ids encontrados: ", ids_escolhidos)
+                            if id_produto in palavras_mensagens:
+                                
+                                ids_escolhidos.append(id_produto)
+                                
+                        print("Ids encontrados: ", ids_escolhidos)
+                        
+                        self.status_atendimento = "Aguardando cpf"
+                                        
+                elif self.status_atendimento == "Aguardando cpf":
+                    
+                    pegar_cpf()
+                    
+                    self.status_atendimento = "Aguardando endereço"
+                    
+                    self.key_esc()
+                    
+                    self.wait(1000)       
+                    
+                elif self.status_atendimento == "Aguardando endereço":
+                    
+                    pegar_endereco()
+                    
+                    self.status_atendimento = "Agradecimento" 
+                    
+                    self.key_esc()
+                    
+                    self.wait(1000)
+                
+                elif self.status_atendimento == "Agradecimento":
                     
                     campo_mensagem()
                     
-                    self.paste("Informe o seu cpf:")
+                    self.paste("Pedido realizado com sucesso, obrigado")
                     
                     enviar_mensagem()
                     
                     self.key_esc()
                     
-                    campo_mensagem()
+                    self.status_atendimento = "Inicio atendimento"
                     
-                    self.paste("informe o seu endereço")
-                    
-                    enviar_mensagem()
-                    
-                    self.key_esc()
-                                                        
-                    campo_mensagem()
-                    
-                    self.paste("obrigado, pedido realizado com sucesso")
-
-                    enviar_mensagem()   
-                    
+                    self.wait(1000)
+                         
                 else:
                     
                      campo_mensagem()
@@ -102,9 +157,9 @@ class Bot(DesktopBot):
                      # Searching for element 'enviar_mensagem '
                      enviar_mensagem()
                      
-                     self.key_esc()
-                    
-                
+                     self.key_esc()    
+                     
+                     self.wait(1000)
             else:
                 
                 print("Não há novas mensagens")
