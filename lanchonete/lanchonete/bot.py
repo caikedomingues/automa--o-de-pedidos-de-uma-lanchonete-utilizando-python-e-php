@@ -47,13 +47,17 @@ class Bot(DesktopBot):
                 self.not_found("enviar_mensagem")
             self.click()
             
+        self.ids_escolhidos = []
             
+        self.cpf = None
+            
+        self.endereco = None    
             
                           
         while True:  
             # Searching for element 'nova_mensagem '
             nova_mensagem = self.find("nova_mensagem", matching=0.97, waiting_time=10000)
-            
+             
             if nova_mensagem:
                 
                 self.click()
@@ -103,35 +107,41 @@ class Bot(DesktopBot):
                         
                         palavras_mensagens = texto_mensagem.split()
                         
-                        ids_escolhidos = []
-                        
                         for id_produto in palavras_mensagens:
                             
-                            if id_produto in palavras_mensagens:
+                            if id_produto in lista_pedidos:
                                 
-                                ids_escolhidos.append(id_produto)
-                        
-                        print("Ids encontrados: ", ids_escolhidos)
+                                self.ids_escolhidos.append(id_produto)
 
-                    
                         pegar_cpf()
-                        
+                                                
                         self.status_atendimento = "Aguardando endereco"
                         
                         self.key_esc()
                         
                 elif self.status_atendimento == "Aguardando endereco":
                     
+                    self.cpf = texto_mensagem
+
                     pegar_endereco()
+                    
                     self.key_esc()
                     
                     self.status_atendimento = "Agradecimento"
                 
                 elif self.status_atendimento == "Agradecimento":
                     
+                    self.endereco = texto_mensagem
+                    
                     campo_mensagem()
                     
                     self.paste("pedido realizado com sucesso")
+                    
+                    enviar_mensagem()
+                    
+                    campo_mensagem()
+                    
+                    self.paste(f"Dados da entrega -> cpf: {self.cpf}, endereço: {self.endereco}, produtos: {self.ids_escolhidos}")
                     
                     enviar_mensagem()
                     
@@ -163,7 +173,6 @@ class Bot(DesktopBot):
 
 if __name__ == '__main__':
     Bot.main()
-
 
 
 

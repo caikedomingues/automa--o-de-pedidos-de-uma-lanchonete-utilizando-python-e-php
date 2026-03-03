@@ -3,6 +3,8 @@
 # criar conexões com o banco de dados.
 import mysql.connector
 
+import random
+
 # Função que ira conectar o python ao banco de dados com o objetetivo
 # de permitir que a linguagem realize operações no banco de dados.
 def conectarBancoAutomacao():
@@ -98,7 +100,59 @@ def lista_ids():
     
     
     return lista_ids
+
+
+def criarpedidos(id_produto, cpf_cliente, endereco_entrega):
+    try:
+        
+        conexao = conectarBancoAutomacao()
+        
+        cursor = conexao.cursor()
+        
+        consulta_entregador = "SELECT nome_entregador from entregadores ORDER BY RAND() LIMIT 1"
+        
+        cursor.execute(consulta_entregador)
+        
+        resultado = cursor.fetchone()
+        
+        nome_entregador = resultado[0]
+        
+        for lista_id in id_produto:
+            
+            consulta_preco = "SELECT preco from produtos WHERE id_produto = %s"
+            
+            cursor.execute(consulta_preco, (lista_id,))
+            
+            resultado = cursor.fetchone()
+            
+            preco_pedido = resultado[0]
+        
+            insercao_pedido = "INSERT INTO pedidos(produto_pedido, dono_pedido, nome_entregador, total_pedido, endereco) Values(%s, %s, %s, %s, %s)"
+            
+            cursor.execute(insercao_pedido, (lista_id, cpf_cliente, nome_entregador, preco_pedido, endereco_entrega))
+            
+            print("Pedido realizado com sucesso")
+            
+        conexao.commit()
+        
+    except mysql.connector.ProgrammingError as erro:
+        
+        print("Erro de inserção, por favor verifique se a coluna existe no banco de dados", erro)
     
+    except mysql.connector.DatabaseError as erro:
+        
+        print("Erro de sintaxe ou de tabela não encontrada: ", erro)
     
+    except mysql.connector.OperationalError as erro:
+        
+        print("Falha na conexão com o banco de dados: ", erro)
+    
+    except mysql.connector.IntegrityError as erro:
+        
+        print("Erro de integridade dos dados, por favor, verifique o valor inserido na chave estrangeira: ", erro)
+    
+    finally:
+        
+        conexao.close()
 
         

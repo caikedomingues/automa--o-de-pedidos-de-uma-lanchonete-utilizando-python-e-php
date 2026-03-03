@@ -50,6 +50,8 @@ estilizações de páginas.
 
 -> Para mudar o status da entrega o entregador devera logar no sistema usando o seu cpf e senha
 
+-> Não há restriçoes para as senhas de entregadores.
+
 -> O sistema devera verificar se uma sessão foi iniciada antes de permitir que uma ação seja executada
 
 -> Somente o administrador do sistema poderá cadastrar novos entregadores
