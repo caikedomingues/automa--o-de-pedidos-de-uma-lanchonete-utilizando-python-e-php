@@ -95,50 +95,43 @@ class Bot(DesktopBot):
                         
                         self.wait(1000)
                         
-                    self.status_atendimento = "Aguardando pedido"
+                        self.status_atendimento = "Aguardando atendimento"
                 
-                elif self.status_atendimento == "Aguardando pedido":
+                elif self.status_atendimento == "Aguardando atendimento":
                     
-                     if any(opcao in texto_mensagem for opcao in lista_pedidos):
-                    
+                    if any(opcao in texto_mensagem for opcao in lista_pedidos):
+                        
                         palavras_mensagens = texto_mensagem.split()
                         
                         ids_escolhidos = []
-                        for id_produto in lista_pedidos:
+                        
+                        for id_produto in palavras_mensagens:
                             
                             if id_produto in palavras_mensagens:
                                 
                                 ids_escolhidos.append(id_produto)
-                                
-                        print("Ids encontrados: ", ids_escolhidos)
                         
-                        self.status_atendimento = "Aguardando cpf"
-                                        
-                elif self.status_atendimento == "Aguardando cpf":
+                        print("Ids encontrados: ", ids_escolhidos)
+
                     
-                    pegar_cpf()
-                    
-                    self.status_atendimento = "Aguardando endereço"
-                    
-                    self.key_esc()
-                    
-                    self.wait(1000)       
-                    
-                elif self.status_atendimento == "Aguardando endereço":
+                        pegar_cpf()
+                        
+                        self.status_atendimento = "Aguardando endereco"
+                        
+                        self.key_esc()
+                        
+                elif self.status_atendimento == "Aguardando endereco":
                     
                     pegar_endereco()
-                    
-                    self.status_atendimento = "Agradecimento" 
-                    
                     self.key_esc()
                     
-                    self.wait(1000)
+                    self.status_atendimento = "Agradecimento"
                 
                 elif self.status_atendimento == "Agradecimento":
                     
                     campo_mensagem()
                     
-                    self.paste("Pedido realizado com sucesso, obrigado")
+                    self.paste("pedido realizado com sucesso")
                     
                     enviar_mensagem()
                     
@@ -146,8 +139,7 @@ class Bot(DesktopBot):
                     
                     self.status_atendimento = "Inicio atendimento"
                     
-                    self.wait(1000)
-                         
+                   
                 else:
                     
                      campo_mensagem()
