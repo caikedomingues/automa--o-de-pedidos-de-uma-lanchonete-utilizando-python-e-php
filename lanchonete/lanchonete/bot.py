@@ -139,14 +139,16 @@ class Bot(DesktopBot):
                     
                     enviar_mensagem()
                     
+                    self.informações_pedidos = BancoAutomacao.criarpedidos(self.ids_escolhidos, self.cpf, self.endereco)
+                    
                     campo_mensagem()
                     
-                    self.paste(f"Dados da entrega -> cpf: {self.cpf}, endereço: {self.endereco}, produtos: {self.ids_escolhidos}")
+                    self.paste(f"Dados da entrega -> cpf: {self.cpf}, endereço: {self.endereco}, produtos: {self.ids_escolhidos}, valor total: {self.informações_pedidos}")
                     
                     enviar_mensagem()
                     
                     self.key_esc()
-                    
+            
                     self.status_atendimento = "Inicio atendimento"
                     
                    

@@ -117,6 +117,8 @@ def criarpedidos(id_produto, cpf_cliente, endereco_entrega):
         
         nome_entregador = resultado[0]
         
+        valor_total_exibir = 0
+        
         for lista_id in id_produto:
             
             consulta_preco = "SELECT preco from produtos WHERE id_produto = %s"
@@ -126,14 +128,18 @@ def criarpedidos(id_produto, cpf_cliente, endereco_entrega):
             resultado = cursor.fetchone()
             
             preco_pedido = resultado[0]
+            
+            valor_total_exibir = valor_total_exibir + preco_pedido
         
-            insercao_pedido = "INSERT INTO pedidos(produto_pedido, dono_pedido, nome_entregador, total_pedido, endereco) Values(%s, %s, %s, %s, %s)"
+            insercao_pedido = "INSERT INTO pedidos(produto_pedido, dono_pedido, nome_entregador, preco_pedido, endereco) Values(%s, %s, %s, %s, %s)"
             
             cursor.execute(insercao_pedido, (lista_id, cpf_cliente, nome_entregador, preco_pedido, endereco_entrega))
             
             print("Pedido realizado com sucesso")
             
         conexao.commit()
+        
+        return valor_total_exibir
         
     except mysql.connector.ProgrammingError as erro:
         
