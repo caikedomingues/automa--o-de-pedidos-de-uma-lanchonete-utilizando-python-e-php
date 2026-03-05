@@ -3,8 +3,6 @@
 # criar conexões com o banco de dados.
 import mysql.connector
 
-import random
-
 # Função que ira conectar o python ao banco de dados com o objetetivo
 # de permitir que a linguagem realize operações no banco de dados.
 def conectarBancoAutomacao():
@@ -78,27 +76,46 @@ def consultarprodutos():
     # do banco de dados.
     return mensagem
     
-
+# Função que ira retornar a lista de ids dos prosutos cadastrados no sistema.
+# Vamos usar essa função para consultar todos os ids com o objetivo de 
+# verificar se o pedido do cliente possui as instruções válidas para  
+# a realização do pedido.
 def lista_ids():
     
+    # Irá se conectar ao servidor do banco de dados.
     conexao = conectarBancoAutomacao()
     
+    # Sera responsável por enviar as requisições ao servidor.
     cursor = conexao.cursor()
     
+    # Ira conter o comando que consultara os ids dos produtos.
     consulta_id = "SELECT id_produto from produtos"
     
+    # Ira executar o comando de consulta.
     cursor.execute(consulta_id)
     
+    # Ira retornar todos os ids encontrados na consulta.
     ids = cursor.fetchall()
     
+    # Ira conter uma lista com os ids encontrados na consulta.
     lista_ids = []
     
+    # Ira percorrer a lista com o objetivo de adicionar os ids
+    # na lista.
     for itens in ids:
         
-        
+        # Como o fetchall retorna uma lista de tuplas, onde cada
+        # tupla representa uma linha da tabela (dentro da tupla,
+        # cada item corresponde a uma coluna que você pediu no
+        # SELECT, como pedimos apenas o id do produto, a tupla terá 
+        # apenas um elemento no indice, ou seja, apenas uma coluna).
+        # Dito isso, seria interessante adicionar os valores em uma
+        # lista que tera os seus dados numericos convertidos para 
+        # string com o objetivo de facilitar a comparação dos valores
+        # com a mensagem recebida
         lista_ids.append(str(itens[0]))
     
-    
+    # Ira retorna a lista com os ids encontrados   
     return lista_ids
 
 
