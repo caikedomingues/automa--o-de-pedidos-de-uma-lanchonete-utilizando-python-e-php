@@ -105,3 +105,22 @@ insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('
 
 select * from produtos;
 
+# Vamos inserir entregadores para testar a criação de pedidos através do sistema
+
+insert into entregadores(cpf_entregador, nome_entregador, telefone_entregador, veiculo, senha_entregador) values('12345678911', 'carlos', '90909678921','moto', '123456');
+
+insert into entregadores(cpf_entregador, nome_entregador, telefone_entregador, veiculo, senha_entregador) values('89738267189', 'jean', '41833397','moto', '123456');
+
+insert into entregadores(cpf_entregador, nome_entregador, telefone_entregador, veiculo, senha_entregador) values('22222222222', 'mario', '41894566','moto', '123456');
+
+#
+alter table pedidos drop column total_pedido;
+
+alter table pedidos add column preco_pedido float not null;
+
+
+describe pedidos;
+describe entregadores;
+
+select * from pedidos;
+

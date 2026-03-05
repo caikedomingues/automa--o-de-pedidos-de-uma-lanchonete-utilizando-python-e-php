@@ -119,63 +119,115 @@ def lista_ids():
     return lista_ids
 
 
+# Função que irá adicionar os pedidos dos clientes no banco de dados.
+# A função irá receber como argumento o id do priduto pedido, o cpf
+# do cliente e o endereço da entrega.
 def criarpedidos(id_produto, cpf_cliente, endereco_entrega):
+    
+    # Tera como objetivo inspecionar o bloco de codigo com o objetivo
+    # de capturar possiveis erros de execução do código  
     try:
         
+        # Ira se conectar ao servidor do banco de dados.
         conexao = conectarBancoAutomacao()
         
+        # Será responsável por enviar requisições ao servidor.
         cursor = conexao.cursor()
         
+        # ira selecionar aleatóriamente um entregador (um dos
+        # nomes de entregadores cadastrados no sistema) com
+        # o objetivo de escolher o entregador da entrega.
         consulta_entregador = "SELECT nome_entregador from entregadores ORDER BY RAND() LIMIT 1"
         
+        # Ira executar o comando de consulta.
         cursor.execute(consulta_entregador)
         
+        # Ira conter a unica linha selecionada pelo banco
         resultado = cursor.fetchone()
         
+        # Ira acessar o valor (nome) presente na unica linha
+        # retornada pela consulta
         nome_entregador = resultado[0]
         
+        # Ira conter o valor total do pedido do cliente, esse valor
+        # será exibido no final do atendimento.
         valor_total_exibir = 0
         
+        # Ira percorrer a lista de ids escolhidos com o objetivo
+        # de realizar consultas e inserções no banco.
         for lista_id in id_produto:
             
+            # Ira consultar o preço dos ids informados com o objetivo
+            # de inserir os preços na tabela de pedidos e calcular
+            # o valor total do pedido. (comando realizado da maneira
+            # segura que evita injeções sql no banco).
             consulta_preco = "SELECT preco from produtos WHERE id_produto = %s"
             
+            # Ira executar o comando de consulta.
             cursor.execute(consulta_preco, (lista_id,))
             
+            # Ira retornar o preço de cada id encontrado na consulta
             resultado = cursor.fetchone()
             
+            # Ira acessar o unico valor encontrado pelo
+            # banco (um pra cada id encontrado)          
             preco_pedido = resultado[0]
             
+            # Ira somar o preço de cada id.
             valor_total_exibir = valor_total_exibir + preco_pedido
-        
+
+            # Ira conter o comando que insere os dados na tabela de pedidos.
             insercao_pedido = "INSERT INTO pedidos(produto_pedido, dono_pedido, nome_entregador, preco_pedido, endereco) Values(%s, %s, %s, %s, %s)"
             
+            # Ira executar o comando de inserção.
             cursor.execute(insercao_pedido, (lista_id, cpf_cliente, nome_entregador, preco_pedido, endereco_entrega))
             
+            # Mensagem que indica o sucesso da execução do trecho de código.
             print("Pedido realizado com sucesso")
-            
+        
+        # Função da classe connector que irá gravar a inserção no servidor.         
         conexao.commit()
         
+        # Retorno do total do valor que será exibido no fim da mensagem
         return valor_total_exibir
         
     except mysql.connector.ProgrammingError as erro:
         
+        # Exceção que representa os erros de "programador" como por
+        # exemplo executar um comando em um cursor fechado, nome
+        # de coluna inexistente ou numero errado de argumentos no
+        # execute.
         print("Erro de inserção, por favor verifique se a coluna existe no banco de dados", erro)
     
     except mysql.connector.DatabaseError as erro:
         
-        print("Erro de sintaxe ou de tabela não encontrada: ", erro)
+        # Exceção que ira retornar os erros de servidor como erro
+        # de sintaxe SQL errada, tabela não encontrada, erro de permissão.
+        print("Erro de servidor, por favor verifique a sintaxe, a existência da tabela ou  a permissão do usuário: ", erro)
     
     except mysql.connector.OperationalError as erro:
+        
+        # Exceção que retorna erros que acontecem durante a operação
+        # no servidor, como por exemplo falhas na conexão ou queda 
+        # do banco.
         
         print("Falha na conexão com o banco de dados: ", erro)
     
     except mysql.connector.IntegrityError as erro:
         
+        # Exceção que retorna erros relacionados aos dados inseridos
+        # no banco como por exemplo, um CPF que não possui o formato
+        # válido definido na chave primária
         print("Erro de integridade dos dados, por favor, verifique o valor inserido na chave estrangeira: ", erro)
     
     finally:
         
+        # Trecho que sempre será executado, independente da situação
+        
+        # Ira fechar a conexão com o banco de dados com o objetivo
+        # de facilitar o processamento do programa, já que não há
+        # necessidade de continuar conectado ao banco após o fim
+        # do processo. 
         conexao.close()
 
         
