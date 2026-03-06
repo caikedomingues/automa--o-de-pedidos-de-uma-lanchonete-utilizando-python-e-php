@@ -141,9 +141,12 @@ class Bot(DesktopBot):
                     
                     self.informações_pedidos = BancoAutomacao.criarpedidos(self.ids_escolhidos, self.cpf, self.endereco)
                     
+                    self.codigos_pedidos = BancoAutomacao.consultar_codigo_pedido(self.cpf)
+                    
+                    
                     campo_mensagem()
                     
-                    self.paste(f"Dados da entrega -> cpf: {self.cpf}, endereço: {self.endereco}, produtos: {self.ids_escolhidos}, valor total: {self.informações_pedidos}")
+                    self.paste(f"Dados da entrega -> cpf: {self.cpf}, endereço: {self.endereco}, produtos: {self.ids_escolhidos}, valor total: {self.informações_pedidos}, codigo(s) do(s) pedido(s): {self.codigos_pedidos}")
                     
                     enviar_mensagem()
                     

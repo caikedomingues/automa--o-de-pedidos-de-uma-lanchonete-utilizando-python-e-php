@@ -230,4 +230,29 @@ def criarpedidos(id_produto, cpf_cliente, endereco_entrega):
         # do processo. 
         conexao.close()
 
+
+
+def consultar_codigo_pedido(cpf_cliente):
+    
+    conexao = conectarBancoAutomacao()
+    
+    cursor = conexao.cursor()
+    
+    consulta_codigo = "SELECT codigo_pedido from pedidos WHERE dono_pedido = %s AND status_entrega = 'Pedido a caminho'"
+    
+    cursor.execute(consulta_codigo, (cpf_cliente,))
+    
+    resultado = cursor.fetchall()
+    
+    codigo = []
+    
+    for dado in resultado:
+        
+        codigo.append(str(dado))
+    
+    
+    return codigo
+
+
+
         
