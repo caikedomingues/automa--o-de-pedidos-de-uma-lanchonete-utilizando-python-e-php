@@ -231,26 +231,43 @@ def criarpedidos(id_produto, cpf_cliente, endereco_entrega):
         conexao.close()
 
 
-
+# Função que ira retornar uma com os codigos de pedidos dos clientes.
+# A função ira receber como argumento o cpf do cliente que terá os
+# códigos retornados.
 def consultar_codigo_pedido(cpf_cliente):
     
+    # Ira se conectar ao banco de dados
     conexao = conectarBancoAutomacao()
     
+    # Ira ser responsável pelo envio de requisições ao servidor
+    # do banco.
     cursor = conexao.cursor()
     
+    # Comando de consulta dos codigos de pedidos.
     consulta_codigo = "SELECT codigo_pedido from pedidos WHERE dono_pedido = %s AND status_entrega = 'Pedido a caminho'"
     
+    # Ira executar o comando da consulta
     cursor.execute(consulta_codigo, (cpf_cliente,))
     
+    # Ira retornar uma lista de tuplas com todos os valores (codigos)
+    # do cliente
     resultado = cursor.fetchall()
     
+    # Vamos criar uma lista que ira conter os valores dos códigos
+    # retornados pela consulta. Dessa forma ao percorrer a tupla
+    # de resultados, a variável codigo irá armazenar os valores
+    # ao invés de substituir os valores.
     codigo = []
     
+    # Ira percorrer a tupla de dados retornados.
     for dado in resultado:
         
-        codigo.append(str(dado))
+        # Ira adicionar os dados convertidos em string na lista de
+        # códigos. observação: Resolvi transformar os dados em string
+        # para facilitar a impressão dos dados na mensagem.
+        codigo.append(str(dado[0]))
     
-    
+    # Ira retornar a lista de codigos de pedidos.
     return codigo
 
 

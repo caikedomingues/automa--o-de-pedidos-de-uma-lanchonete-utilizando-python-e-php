@@ -1,5 +1,8 @@
 
-
+# Import da classe DesktopBot do módulo core da biblioteca
+# BotCity que tera como objetivo "transferir" os seus metodos
+# para a classe bot que ira conter os códigos necessários para 
+# a construção da aplicação.
 from botcity.core import DesktopBot
 
 import BancoAutomacao
@@ -149,6 +152,8 @@ class Bot(DesktopBot):
                     self.paste(f"Dados da entrega -> cpf: {self.cpf}, endereço: {self.endereco}, produtos: {self.ids_escolhidos}, valor total: {self.informações_pedidos}, codigo(s) do(s) pedido(s): {self.codigos_pedidos}")
                     
                     enviar_mensagem()
+                    
+                    self.ids_escolhidos.clear()
                     
                     self.key_esc()
             
