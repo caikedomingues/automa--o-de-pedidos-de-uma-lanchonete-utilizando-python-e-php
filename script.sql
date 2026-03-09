@@ -103,6 +103,7 @@ insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('
 insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('coxinha', 1.00, 'salgados', 1 );
 insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('misto quente', 15.90, 'lanches', 8 );
 
+# Vamos verificar se os produtos foram inseridos corretamente.
 select * from produtos;
 
 # Vamos inserir entregadores para testar a criação de pedidos através do sistema
@@ -113,14 +114,29 @@ insert into entregadores(cpf_entregador, nome_entregador, telefone_entregador, v
 
 insert into entregadores(cpf_entregador, nome_entregador, telefone_entregador, veiculo, senha_entregador) values('22222222222', 'mario', '41894566','moto', '123456');
 
-#
+# Resolvi remover a coluna de total de pedidos. Tomei essa decisão
+# por que realizaremos o conceito de normalização, ou seja, um cliente que possui
+# mais de um pedido terá mais de uma linha no banco de dados (uma para cada pedido
+# desse mesmo cliente). 
 alter table pedidos drop column total_pedido;
 
+# Vou mudar a coluna de pedidos em uma coluna de preço dos pedidos.
 alter table pedidos add column preco_pedido float not null;
 
-
+# Verificando se as alterações nas tabelas foram realizadas com sucesso.
 describe pedidos;
 describe entregadores;
 
+# Deletei esses dados que foram inseridos no sistema de forma incorreta (resolvi esse problema no python).
+delete from pedidos where codigo_pedido = '0005';
+
+delete from pedidos where codigo_pedido = '0006';
+
+delete from pedidos where codigo_pedido = '0025';
+
+delete from pedidos where codigo_pedido = '0026';
+
+# Verificando se os dados foram inseridos corretamente.
 select * from pedidos;
+
 
