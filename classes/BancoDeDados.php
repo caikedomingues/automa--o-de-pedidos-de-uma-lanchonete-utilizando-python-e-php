@@ -6,8 +6,9 @@
     #Este aequivo ira conter a conexão com o banco de dados que iremos utilizar em outras
     # classes com o objetivo de conectar os métodos de cada objeto ao banco de dados.
     # Vamos usar essa classe parav realizar a injeção de dependência que basicamente 
-    # consiste em tornar uma classe dependente da existência da outra, ou seja, todos
-    # os metodos das outra classes irão depender do metodo conexao da classe BancoDeDados.
+    # consiste em tornar os códigos das outra classes mais adaptavel a mudanças no
+    # código da classe Banco de Dados, já que elas necessitaram de receber apenas
+    # a conexão.
     
     # Criação da classe banco de dados que conterá o método de conexão.
     class BancoDeDados{

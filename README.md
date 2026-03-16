@@ -56,6 +56,8 @@ estilizações de páginas.
 
 -> Somente o administrador do sistema poderá cadastrar novos entregadores
 
+-> Um entregador só pode ser cadastrado uma única vez
+
 -> Somente o administrador poderá cadastrar produtos
 
 -> Ao receber uma mensagem o sistema deve responder mandando a lista de itens disponiveis para a compra
@@ -63,6 +65,8 @@ estilizações de páginas.
 -> O cliente devera escolher os ids dos produtos que ele quer comprar
 
 -> Somente o administrador poderá excluir produtos do sistema.
+
+-> Somente o administrador poderá excluir entregadores do sistema.
 
 -> Somente o administrador poderá visualizar todos os pedidos e seus status
 
