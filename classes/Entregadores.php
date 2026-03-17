@@ -164,6 +164,19 @@
                 if ($resultado_consulta->rowCount()== 0){
 
                     # se a quantidade de linhas encontradas pela consulta for igual a zero, vamos iniciar o processo de inserção do novo dado.
+                    
+                    # Primeiro, vamos trabalhar a criptografia da senha.
+                    # Armazenando a senha em uma variável
+                    $senha = $this->getsenha_entregador();
+
+                    # Ira conter o resultado (senha criptografada) da função passwordhash
+                    # que tem como objetivo gerar hashs que mascaram o valor real da
+                    # senha. Ela recebe como argumento a senha que sera criptografada
+                    # e o tipo de criptografia. No nosso caso usaremos o PASSWORD_DEFAULT
+                    # que sempre utilizara o modelo padrão de hash no momento, ou seja,
+                    # se o padrão for trocado ou atualizado, o pasword default mudará 
+                    # automaticamente o seu padrao de criptografia. 
+                    $senha_criptografada = password_hash($senha, PASSWORD_DEFAULT);
 
                     # Ira conter o comando de inserção com os rótulos que irão representar os valores que serão inseridos
                     $comando_insercao = "INSERT INTO entregadores (cpf_entregador, nome_entregador, telefone_entregador, senha_entregador) VALUES(:cpf_entregador, :nome_entregador, :telefone_entregador, :senha_entregador)";
@@ -172,7 +185,7 @@
                     $insercao = $this->conexao->prepare($comando_insercao);
 
                     # Após o filtro dos valores, iremos executar o comando atribuindo a cada rótulo, o valor que deve ser inserido.
-                    $insercao -> execute([':cpf_entregador'=>$this->getcpf_entregador(), ':nome_entregador'=>$this->getnome_entregador(), ':telefone_entregador'=>$this->gettelefone_entregador(),':senha_entregador'=>$this->getsenha_entregador()]);
+                    $insercao -> execute([':cpf_entregador'=>$this->getcpf_entregador(), ':nome_entregador'=>$this->getnome_entregador(), ':telefone_entregador'=>$this->gettelefone_entregador(),':senha_entregador'=>$senha_criptografada]);
 
                     # Mensagem de sucesso.
                     echo "Entregador cadastrado";
