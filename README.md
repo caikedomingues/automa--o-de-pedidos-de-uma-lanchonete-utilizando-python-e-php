@@ -96,4 +96,6 @@ de informa-lo ao entregador.
 
 -> Tela de informações de pedidos
 
+-> Tela de informações de pedidos entregues
+
 -> tela de informações dos entregadores

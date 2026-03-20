@@ -67,12 +67,12 @@
 
                     # Se o resultado da função for true, iremos retornar esse valor que na validação condicinal na pagina 
                     # index.php ira indicar que a sessão foi criada
-                    return True;
+                    return true;
                 }else{
 
                     # Se o resultado da função for false, iremos imprimir essa mensagem e
                     # encerraremos a execução do método.
-                    die("Senha Inválida");
+                    die("Usuario ou senha inválida");
                 }
 
             }else{
