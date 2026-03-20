@@ -80,7 +80,7 @@ de informa-lo ao entregador.
 
                                                         Paginas do sistema
 
--> tela de login do administrador (pagina inicial)
+-> tela de login do administrador (pagina inicial): Finalizado
 
 -> tela de login dos entregadores
 
