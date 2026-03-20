@@ -96,118 +96,132 @@
 
         # Método que irá cadastrar novos entregadores.
         public function cadastrarEntregador(){
+            # Ira verificar se a sessão possui um valor diferente de 
+            # true ou se a variável global deixou de existir
+            if ($_SESSION['login_adm'] != true || !isset($_SESSION['login_adm'])){
 
-            # Ira inspecionar o bloco de código com o objetivo de capturar possiveis erros.
-            try{
+                # Se essa condição for verdadeira, iremos enceerrar
+                # a execução do método e imprimir essa mensagem.
+                die('Acesso negado, só o administrador pode cadastrar entregadores');
+            }else{
 
-                # Vamos realizar um conjunto de validações que irão definir se os dados informados
-                # são validos para salvar no banco de dados.
-                if (strlen($this->getcpf_entregador()) != 11){
+                # Se a sessão estiver sido criada, vamos iniciar
+                # o processo de cadastro
 
-                    # Se o tamanho do cpf não for de 11 digitos vamos 
-                    # encerrar a execução do método e imprimir essa mensagem.
-                    # die: Função do php que tem como objetivo encerrar/interromper
-                    # a execução de um metodo ou função. Ele pode receber como argumento
-                    # uma string que representa a mensagem que justifica o encerramento
-                    # da execução.
-                    die("O cpf deve conter 11 digitos");
+                # Ira inspecionar o bloco de código com o objetivo de capturar possiveis erros.
+                try{
 
-                }else if (is_numeric($this->getcpf_entregador()) == False){
+                    # Vamos realizar um conjunto de validações que irão definir se os dados informados
+                    # são validos para salvar no banco de dados.
+                    if (strlen($this->getcpf_entregador()) != 11){
+
+                        # Se o tamanho do cpf não for de 11 digitos vamos 
+                        # encerrar a execução do método e imprimir essa mensagem.
+                        # die: Função do php que tem como objetivo encerrar/interromper
+                        # a execução de um metodo ou função. Ele pode receber como argumento
+                        # uma string que representa a mensagem que justifica o encerramento
+                        # da execução.
+                        die("O cpf deve conter 11 digitos");
+
+                    }else if (is_numeric($this->getcpf_entregador()) == False){
+                        
+                        # Se o cpf tiver letras em seus digitos, vamos encerrar a execução do
+                        # método e imprimir essa mensagem.
+                        # is_numeric: Função do php que tem como objetivo verificar há existência
+                        # de numeros em uma string. Ele recebe como argumento a string que está sendo
+                        # verificada e retorna um valor booleano onde True representa a ausência de 
+                        # letras e False representa a existència de letras na string
+                        die("O cpf deve conter apenas numeros");
+
+                    }
+
+                    if(is_numeric($this->getnome_entregador()) == True ){
+                        
+                        # Se o nome do entregador tiver numeros em seu valor, vamos encerrar
+                        # a execução do método e imprimir essa mensagem.
+                        die("O nome não pode conter números");
+                    } 
+
+                    if (strlen($this->gettelefone_entregador()) != 11 && strlen($this->gettelefone_entregador()) != 8){
+
+                        # Se a quantidade de digitos do telefone for diferente de 8 e 11, vamos encerrar o metodo
+                        # e imprimir essa mensagem.
+                        die("o telefone deve conter 8 (telefone fixo) ou 11 digitos (celular)");
+
+                    }else if(is_numeric($this->gettelefone_entregador()) == False){
                     
-                    # Se o cpf tiver letras em seus digitos, vamos encerrar a execução do
-                    # método e imprimir essa mensagem.
-                    # is_numeric: Função do php que tem como objetivo verificar há existência
-                    # de numeros em uma string. Ele recebe como argumento a string que está sendo
-                    # verificada e retorna um valor booleano onde True representa a ausência de 
-                    # letras e False representa a existència de letras na string
-                    die("O cpf deve conter apenas numeros");
+                        # Se o telefone tiver letras em seu valor, vamos encerrar a execução do método
+                        # e imprimir essa mensagem.
+                    die("O telefone não deve conter letras");
+                    }
 
+                    # Nessa etapa, vamos verificar se o cpf informado para cadastro ja existe no sistema. Vamos realizar essa ação
+                    # usando o modo seguro do prepare que tem como objetivo filtrar valores e não executar comandos sql (que evita
+                    # ataques de SQL injection).
+
+                    # Ira conter o comando de consulta do cpf. ":cpf_entregador": Reepresenta o rótulo que utilizaremos
+                    # para representar o dado que queremos procurar no banco.
+                    $consulta_cpf = "SELECT cpf_entregador FROM entregadores WHERE cpf_entregador = :cpf_entregador";
+
+                    # Função da classe PDO que tem como objetivo filtrar os valores do comando com o objetivo
+                    # de separa-los dos comandos requisitados, dessa forma, o sistema não excutara scripts maliciosos inseridos
+                    # pelo usuário.
+                    $resultado_consulta = $this->conexao->prepare($consulta_cpf);
+
+                    # Após o filtro podemos executar o comando com segurança atribuindo ao rótulo definido
+                    # na consulta o valor que deve ser encontrado.
+                    $resultado_consulta->execute([':cpf_entregador'=>$this->getcpf_entregador()]);
+
+                    if ($resultado_consulta->rowCount()== 0){
+
+                        # se a quantidade de linhas encontradas pela consulta for igual a zero, vamos iniciar o processo de inserção do novo dado.
+                        
+                        # Primeiro, vamos trabalhar a criptografia da senha.
+                        # Armazenando a senha em uma variável
+                        $senha = $this->getsenha_entregador();
+
+                        # Ira conter o resultado (senha criptografada) da função passwordhash
+                        # que tem como objetivo gerar hashs que mascaram o valor real da
+                        # senha. Ela recebe como argumento a senha que sera criptografada
+                        # e o tipo de criptografia. No nosso caso usaremos o PASSWORD_DEFAULT
+                        # que sempre utilizara o modelo padrão de hash no momento, ou seja,
+                        # se o padrão for trocado ou atualizado, o pasword default mudará 
+                        # automaticamente o seu padrao de criptografia. 
+                        $senha_criptografada = password_hash($senha, PASSWORD_DEFAULT);
+
+                        # Ira conter o comando de inserção com os rótulos que irão representar os valores que serão inseridos
+                        $comando_insercao = "INSERT INTO entregadores (cpf_entregador, nome_entregador, telefone_entregador, senha_entregador) VALUES(:cpf_entregador, :nome_entregador, :telefone_entregador, :senha_entregador)";
+
+                        # Ira filtrar os valores evitando a execução do comando (prevenção contra sql injection)
+                        $insercao = $this->conexao->prepare($comando_insercao);
+
+                        # Após o filtro dos valores, iremos executar o comando atribuindo a cada rótulo, o valor que deve ser inserido.
+                        $insercao -> execute([':cpf_entregador'=>$this->getcpf_entregador(), ':nome_entregador'=>$this->getnome_entregador(), ':telefone_entregador'=>$this->gettelefone_entregador(),':senha_entregador'=>$senha_criptografada]);
+
+                        # Mensagem de sucesso.
+                        echo "Entregador cadastrado";
+
+                    }else{
+
+                        # Se o cadastro for encontrado no sistema, vamos encerrar a execução do método
+                        # e imprimir essa mensagem.
+                        die("Entregador já cadastrado");
+                    }
+
+
+                }catch(PDOException $erro){
+
+                    # Exceção da classe PDO que lida com erros de execução em operações no banco de dados.
+                    # O getMessage é uma função que tem como objetivo retornar a mensagem do erro gerado pela exceção.
+                    # o die ira encerrar a execução do método.
+                    die("Erro na criação do cadastro do entregador: ".$erro->getMessage());
+                                    
                 }
 
-                if(is_numeric($this->getnome_entregador()) == True ){
-                    
-                    # Se o nome do entregador tiver numeros em seu valor, vamos encerrar
-                    # a execução do método e imprimir essa mensagem.
-                    die("O nome não pode conter números");
-                } 
 
-                if (strlen($this->gettelefone_entregador()) != 11 && strlen($this->gettelefone_entregador()) != 8){
-
-                    # Se a quantidade de digitos do telefone for diferente de 8 e 11, vamos encerrar o metodo
-                    # e imprimir essa mensagem.
-                    die("o telefone deve conter 8 (telefone fixo) ou 11 digitos (celular)");
-
-                }else if(is_numeric($this->gettelefone_entregador()) == False){
-                   
-                    # Se o telefone tiver letras em seu valor, vamos encerrar a execução do método
-                    # e imprimir essa mensagem.
-                   die("O telefone não deve conter letras");
-                }
-
-                # Nessa etapa, vamos verificar se o cpf informado para cadastro ja existe no sistema. Vamos realizar essa ação
-                # usando o modo seguro do prepare que tem como objetivo filtrar valores e não executar comandos sql (que evita
-                # ataques de SQL injection).
-
-                # Ira conter o comando de consulta do cpf. ":cpf_entregador": Reepresenta o rótulo que utilizaremos
-                # para representar o dado que queremos procurar no banco.
-                $consulta_cpf = "SELECT cpf_entregador FROM entregadores WHERE cpf_entregador = :cpf_entregador";
-
-                # Função da classe PDO que tem como objetivo filtrar os valores do comando com o objetivo
-                # de separa-los dos comandos requisitados, dessa forma, o sistema não excutara scripts maliciosos inseridos
-                # pelo usuário.
-                $resultado_consulta = $this->conexao->prepare($consulta_cpf);
-
-                # Após o filtro podemos executar o comando com segurança atribuindo ao rótulo definido
-                # na consulta o valor que deve ser encontrado.
-                $resultado_consulta->execute([':cpf_entregador'=>$this->getcpf_entregador()]);
-
-                if ($resultado_consulta->rowCount()== 0){
-
-                    # se a quantidade de linhas encontradas pela consulta for igual a zero, vamos iniciar o processo de inserção do novo dado.
-                    
-                    # Primeiro, vamos trabalhar a criptografia da senha.
-                    # Armazenando a senha em uma variável
-                    $senha = $this->getsenha_entregador();
-
-                    # Ira conter o resultado (senha criptografada) da função passwordhash
-                    # que tem como objetivo gerar hashs que mascaram o valor real da
-                    # senha. Ela recebe como argumento a senha que sera criptografada
-                    # e o tipo de criptografia. No nosso caso usaremos o PASSWORD_DEFAULT
-                    # que sempre utilizara o modelo padrão de hash no momento, ou seja,
-                    # se o padrão for trocado ou atualizado, o pasword default mudará 
-                    # automaticamente o seu padrao de criptografia. 
-                    $senha_criptografada = password_hash($senha, PASSWORD_DEFAULT);
-
-                    # Ira conter o comando de inserção com os rótulos que irão representar os valores que serão inseridos
-                    $comando_insercao = "INSERT INTO entregadores (cpf_entregador, nome_entregador, telefone_entregador, senha_entregador) VALUES(:cpf_entregador, :nome_entregador, :telefone_entregador, :senha_entregador)";
-
-                    # Ira filtrar os valores evitando a execução do comando (prevenção contra sql injection)
-                    $insercao = $this->conexao->prepare($comando_insercao);
-
-                    # Após o filtro dos valores, iremos executar o comando atribuindo a cada rótulo, o valor que deve ser inserido.
-                    $insercao -> execute([':cpf_entregador'=>$this->getcpf_entregador(), ':nome_entregador'=>$this->getnome_entregador(), ':telefone_entregador'=>$this->gettelefone_entregador(),':senha_entregador'=>$senha_criptografada]);
-
-                    # Mensagem de sucesso.
-                    echo "Entregador cadastrado";
-
-                }else{
-
-                    # Se o cadastro for encontrado no sistema, vamos encerrar a execução do método
-                    # e imprimir essa mensagem.
-                    die("Entregador já cadastrado");
-                }
-
-
-            }catch(PDOException $erro){
-
-                # Exceção da classe PDO que lida com erros de execução em operações no banco de dados.
-                # O getMessage é uma função que tem como objetivo retornar a mensagem do erro gerado pela exceção.
-                # o die ira encerrar a execução do método.
-                 die("Erro na criação do cadastro do entregador: ".$erro->getMessage());
-
-                
             }
         }
+
 
 
 
