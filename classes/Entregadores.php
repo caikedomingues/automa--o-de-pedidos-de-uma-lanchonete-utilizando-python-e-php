@@ -17,6 +17,8 @@
 
         private string $senha_entregador;
 
+        private string $veiculo;
+
         private int $quantidade_pedidos_feitos;
 
         # Metodo construtor: Serve para definirmos valores que a classe deve 
@@ -59,6 +61,13 @@
 
         }
 
+        public function setveiculo($veiculo){
+
+            $this->veiculo = $veiculo;
+
+        }
+
+
         public function setquantidade_pedidos_feitos($quantidade_pedidos_feitos){
 
             $this->quantidade_pedidos_feitos = $quantidade_pedidos_feitos;
@@ -89,6 +98,11 @@
             return $this->senha_entregador;
         }
 
+        public function getveiculo(){
+
+            return $this->veiculo;
+        }
+
         public function getquantidade_pedidos_feitos(){
 
             return $this->quantidade_pedidos_feitos;
@@ -98,12 +112,13 @@
         public function cadastrarEntregador(){
             # Ira verificar se a sessão possui um valor diferente de 
             # true ou se a variável global deixou de existir
-            if ($_SESSION['login_adm'] != true || !isset($_SESSION['login_adm'])){
+            if ( !isset($_SESSION['login_adm'])||$_SESSION['login_adm'] != true){
 
                 # Se essa condição for verdadeira, iremos enceerrar
                 # a execução do método e imprimir essa mensagem.
                 die('Acesso negado, só o administrador pode cadastrar entregadores');
-            }else{
+
+                }else{
 
                 # Se a sessão estiver sido criada, vamos iniciar
                 # o processo de cadastro
@@ -135,10 +150,15 @@
 
                     }
 
-                    if(is_numeric($this->getnome_entregador()) == True ){
+                    if(!ctype_alpha($this->getnome_entregador()) ){
                         
-                        # Se o nome do entregador tiver numeros em seu valor, vamos encerrar
-                        # a execução do método e imprimir essa mensagem.
+                        # Se o valor informado tiver a existência de
+                        # números, vamos encerrar a execução do
+                        # método e imprimir essa mensagem. O ctype_alpha
+                        # tem como objetivo verificar se 100% da string
+                        # é composta apenas por letras. Observação:
+                        # Ele também não aceita espaços, acentos e 
+                        # caracteres especia
                         die("O nome não pode conter números");
                     } 
 
@@ -190,16 +210,15 @@
                         $senha_criptografada = password_hash($senha, PASSWORD_DEFAULT);
 
                         # Ira conter o comando de inserção com os rótulos que irão representar os valores que serão inseridos
-                        $comando_insercao = "INSERT INTO entregadores (cpf_entregador, nome_entregador, telefone_entregador, senha_entregador) VALUES(:cpf_entregador, :nome_entregador, :telefone_entregador, :senha_entregador)";
+                        $comando_insercao = "INSERT INTO entregadores (cpf_entregador, nome_entregador, telefone_entregador, senha_entregador, veiculo) VALUES(:cpf_entregador, :nome_entregador, :telefone_entregador, :senha_entregador, :veiculo)";
 
                         # Ira filtrar os valores evitando a execução do comando (prevenção contra sql injection)
                         $insercao = $this->conexao->prepare($comando_insercao);
 
                         # Após o filtro dos valores, iremos executar o comando atribuindo a cada rótulo, o valor que deve ser inserido.
-                        $insercao -> execute([':cpf_entregador'=>$this->getcpf_entregador(), ':nome_entregador'=>$this->getnome_entregador(), ':telefone_entregador'=>$this->gettelefone_entregador(),':senha_entregador'=>$senha_criptografada]);
+                        $insercao -> execute([':cpf_entregador'=>$this->getcpf_entregador(), ':nome_entregador'=>$this->getnome_entregador(), ':telefone_entregador'=>$this->gettelefone_entregador(),':senha_entregador'=>$senha_criptografada, 'veiculo'=>$this->getveiculo()]);
 
-                        # Mensagem de sucesso.
-                        echo "Entregador cadastrado";
+                        echo "Entregador cadastrado com sucesso";
 
                     }else{
 
@@ -222,7 +241,7 @@
             }
         }
 
-
+    }
 
 
 ?>

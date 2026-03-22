@@ -37,7 +37,7 @@ estilizações de páginas.
                                         Tabelas
 -> pedidos: código_pedido(primary key), produto_pedido (ira conter os produtos que o cliente escolheu), dono_pedido, nome_entregador, status_entrega (Ira informar se o pedido ja foi ou não entregue), total_pedido (valor total da compra), data_pedido.
 
--> entregadores: cpf_entregador(primary key), nome_entregador, telefone_entregador,senha_entregador, quantidade_pedidos_feitos.
+-> entregadores: cpf_entregador(primary key), nome_entregador, telefone_entregador,senha_entregador, veiculo, quantidade_pedidos_feitos.
 
 -> produtos: id(primary key), nome, preco, categoria (lanches, salgados, porções, bebidas, sobremesas), quantidade_vendas (ira conter a quantidade de vezes que o produto foi vendido).
 
@@ -86,7 +86,7 @@ de informa-lo ao entregador.
 
 -> tela de mudança de status de entrega
 
--> tela de cadastro de entregadores
+-> tela de cadastro de entregadores: Finalizado
 
 -> tela de cadastro de produtos
 

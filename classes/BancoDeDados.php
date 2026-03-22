@@ -35,9 +35,6 @@
             # usuario e a senha do banco.
             $conexao = new PDO($dsn, $usuario, $senha);
 
-            # Mensagem que ira indicar o sucesso da execução do metodo.
-            echo "Conexão realizada";
-
             # Ira retornar a conexão com o banco de dados (valores que irão
             # conectar as classes ao banco).
             return $conexao;
