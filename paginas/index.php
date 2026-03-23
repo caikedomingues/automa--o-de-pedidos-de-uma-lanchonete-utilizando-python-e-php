@@ -138,10 +138,16 @@
                 <button class="btn btn-primary btn-lg" type="submit">Entrar</button>
             </div>
         </form>
+        <div class="d-grid mt-4">
+            <a href="LoginEntregador.php" class="btn btn-outline-secondary btn-sm shadow-sm">
+                É um entregador? Atualize aqui os status das suas entregas.
+            </a>
+         </div>
+    
+        </div>
  </div>
  <p class="text-center mt-4 text-muted small">
     &copy; 2026 Siistema de Gestão - Lanchonete
-
 </p>
 </div>
 </div>

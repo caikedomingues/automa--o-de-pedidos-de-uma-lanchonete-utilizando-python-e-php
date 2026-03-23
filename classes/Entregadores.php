@@ -241,6 +241,58 @@
             }
         }
 
+        public function loginEntregador(){
+
+            try{
+
+                if(strlen($this->getcpf_entregador()) != 11){
+
+                    die("O cpf deve conter apenas 11 digitos");
+
+                }else if(is_numeric($this->getcpf_entregador()) == False){
+
+                    die("O cpf não deve conter letras");
+                }
+
+               $consulta_senha = "Select senha_entregador FROM entregadores WHERE cpf_entregador = :cpf_entregador";
+
+               $resultado_consulta = $this->conexao->prepare($consulta_senha);
+
+               $resultado_consulta->execute([':cpf_entregador'=>$this->getcpf_entregador()]);
+
+               $usuario_encontrado = $resultado_consulta->fetch(PDO::FETCH_ASSOC);
+
+
+               if($usuario_encontrado){
+
+                    $verificacao = password_verify($this->getsenha_entregador(), $usuario_encontrado['senha_entregador']);
+
+                    if($verificacao){
+
+                            return true;
+
+                    }else{
+
+                            return false;
+                    }
+
+
+               }else{
+
+                    return false;
+               }
+
+
+               
+
+            }catch(PDOException $erro){
+
+                die("Falha na consulta dos dados: ". $erro->getMessage());
+            }
+
+
+        }
+
     }
 
 

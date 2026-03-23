@@ -139,4 +139,6 @@ delete from pedidos where codigo_pedido = '0026';
 # Verificando se os dados foram inseridos corretamente.
 select * from pedidos;
 
+select * from entregadores;
+
 
