@@ -108,7 +108,7 @@ de informa-lo ao entregador.
 
 -> tela de login do administrador (pagina inicial): Finalizado
 
--> tela de login dos entregadores
+-> tela de login dos entregadores: finalizado
 
 -> tela de mudança de status de entrega
 

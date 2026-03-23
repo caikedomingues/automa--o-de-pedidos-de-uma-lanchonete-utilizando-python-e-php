@@ -241,52 +241,101 @@
             }
         }
 
+        # Método que irá realizar o login do entregador na página
+        # de status de entregas.
         public function loginEntregador(){
-
+            # Irá inspecionar o bloco de código com o objetivo de 
+            # capturar possiveis erros de execução do trecho
             try{
 
+                # Irá verificar a quantidade de caracteres do cpf
                 if(strlen($this->getcpf_entregador()) != 11){
-
+                    
+                    # Se a quantidade de caracteres for maior ou
+                    # menor que 11, iremos encerrar a execução
+                    # do método e imprimir essa mensagem.
                     die("O cpf deve conter apenas 11 digitos");
 
                 }else if(is_numeric($this->getcpf_entregador()) == False){
 
+                    # Se o cpf não for composto apenas por numeros, vamos
+                    # encerrar a execução do método e imprimir essa mensagem.
                     die("O cpf não deve conter letras");
                 }
 
+               # Ira consultar a senha do cpf informado no ato do
+               # login. Observação: ":cpf_entregador" representa
+               # o rótulo do valor que iremos passar para a consulta
+               # no execute, ou seja, o valor do cpf do entregador.
                $consulta_senha = "Select senha_entregador FROM entregadores WHERE cpf_entregador = :cpf_entregador";
 
+               # Ira filtrar os valores da consulta com o objetivo
+               # de evitar o SQL INJECTION já que o prepare apenas
+               # coleta os valores da query e não os executa. Dessa
+               # forma, caso o usuário digite comandos, o sistema ira
+               # apenas armazenar o comando e não executa-lo.
                $resultado_consulta = $this->conexao->prepare($consulta_senha);
 
+               # Após o filtro, vamos executar a consulta substituindo
+               # o rótulo pelo valor do cpf informado.
                $resultado_consulta->execute([':cpf_entregador'=>$this->getcpf_entregador()]);
 
+               # Após a consulta, vamos criar um array associativo
+               # usando a função fetch com o objetivo de possibilitar
+               # o acesso aos dados através do nome das colunas 
+               # selecionadas.
                $usuario_encontrado = $resultado_consulta->fetch(PDO::FETCH_ASSOC);
 
-
+                # Irá verificar se algum registro foi encontrado na consulta.
                if($usuario_encontrado){
 
+                    # Se uma senha for encontrada, significa que o cpf
+                    # informado existe no sistema, já que a consulta 
+                    # encontrou o hash da senha do usuário. Após validar
+                    # o cpf através da consulta do hash, vamos iniciar
+                    # a verificação da senha informada pelo usuário.
+
+                    # password_verify:Função que tem como objetvo gerar um hash que será comparado com o hash da senha criptografa com o objetivo de validar se a senha informada condiz com a senha criptografada.A função
+                    # recebe como argumento a senha que será verificada
+                    # (senha digitada pelo usuário) e o hash da senha
+                    # (senha consultada no começo do método). 
                     $verificacao = password_verify($this->getsenha_entregador(), $usuario_encontrado['senha_entregador']);
 
+                    # Irá verificar o resultado da função password_verify. Esse resultado será análisado
+                    # na estrutura condicional da pagina de login que
+                    # ira possibilitar (ou não, se o login estiver
+                    # incorreto) a criação de sessão do usuário(login)
                     if($verificacao){
 
+                            # Se a senha informada for correta, vamos
+                            # retornar true que indicara para a estrutura
+                            # da página de login que os dados estão
+                            # corretos para a realização do login.
                             return true;
 
                     }else{
 
+                            # Se a senha informada não for correta,
+                            # vamos retornar false que indicara para
+                            # a estrutura da pagina de login que 
+                            # os dados informados não estão corretos.
                             return false;
                     }
 
 
                }else{
-
-                    return false;
+                    
+                        # Se o cpf não for encontrado,
+                        # vamos retornar false que indicara para
+                        # a estrutura da pagina de login que 
+                        # os dados informados não estão corretos.
+                        return false;
                }
 
-
-               
-
             }catch(PDOException $erro){
-
+                # Exceção que lida com erros relacionados a operações nos
+                # banco de dados. Nesse caso, iremos interromper
+                # a execução do método e imprimir essa mensagem.
                 die("Falha na consulta dos dados: ". $erro->getMessage());
             }
 
