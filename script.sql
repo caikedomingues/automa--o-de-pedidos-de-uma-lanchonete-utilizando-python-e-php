@@ -136,8 +136,21 @@ delete from pedidos where codigo_pedido = '0025';
 
 delete from pedidos where codigo_pedido = '0026';
 
+SET SQL_SAFE_UPDATES = 0;
+
+delete from pedidos;
+
+alter table pedidos add column cpf_entregador varchar(11);
+
+alter table pedidos drop column nome_entregador;
+
+# Inserindo pedidos para testar a página de status de entregas
+INSERT INTO pedidos( produto_pedido, dono_pedido, endereco, preco_pedido, cpf_entregador) VALUES('2', '98635478293', 'jardim planalto', '14','90934839021');
+
 # Verificando se os dados foram inseridos corretamente.
 select * from pedidos;
+
+select * from produtos;
 
 select * from entregadores;
 

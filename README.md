@@ -59,7 +59,8 @@ estilizações de páginas.
 -> MysqlWorkbench 8.0 CE: SQL.
 
                                         Tabelas
--> pedidos: código_pedido(primary key), produto_pedido (ira conter os produtos que o cliente escolheu), dono_pedido, nome_entregador, status_entrega (Ira informar se o pedido ja foi ou não entregue), total_pedido (valor total da compra), data_pedido.
+-> pedidos: código_pedido(primary key), produto_pedido (ira conter os produtos que o cliente escolheu), dono_pedido, status_entrega (Ira informar se o pedido ja foi ou não entregue), total_pedido (valor total da compra), data_pedido, endereco, cpf_entregador(vamos usar para depois verificar as entregas dele na página de status de 
+entregas).
 
 -> entregadores: cpf_entregador(primary key), nome_entregador, telefone_entregador,senha_entregador, veiculo, quantidade_pedidos_feitos.
 
@@ -127,3 +128,7 @@ de informa-lo ao entregador.
 -> tela de informações dos entregadores
 
 -> Tela de exclusão de entregadores.
+
+-> Botão de logout.
+
+-> Criação do menu principal (etapa final)

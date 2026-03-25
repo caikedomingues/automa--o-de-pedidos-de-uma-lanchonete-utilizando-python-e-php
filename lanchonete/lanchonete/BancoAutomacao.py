@@ -135,9 +135,9 @@ def criarpedidos(id_produto, cpf_cliente, endereco_entrega):
         cursor = conexao.cursor()
         
         # ira selecionar aleatóriamente um entregador (um dos
-        # nomes de entregadores cadastrados no sistema) com
+        # cpfs de entregadores cadastrados no sistema) com
         # o objetivo de escolher o entregador da entrega.
-        consulta_entregador = "SELECT nome_entregador from entregadores ORDER BY RAND() LIMIT 1"
+        consulta_entregador = "SELECT cpf_entregador from entregadores ORDER BY RAND() LIMIT 1"
         
         # Ira executar o comando de consulta.
         cursor.execute(consulta_entregador)
@@ -145,9 +145,9 @@ def criarpedidos(id_produto, cpf_cliente, endereco_entrega):
         # Ira conter a unica linha selecionada pelo banco
         resultado = cursor.fetchone()
         
-        # Ira acessar o valor (nome) presente na unica linha
+        # Ira acessar o valor (cpf) presente na unica linha
         # retornada pela consulta
-        nome_entregador = resultado[0]
+        cpf_entregador = resultado[0]
         
         # Ira conter o valor total do pedido do cliente, esse valor
         # será exibido no final do atendimento.
@@ -177,10 +177,10 @@ def criarpedidos(id_produto, cpf_cliente, endereco_entrega):
             valor_total_exibir = valor_total_exibir + preco_pedido
 
             # Ira conter o comando que insere os dados na tabela de pedidos.
-            insercao_pedido = "INSERT INTO pedidos(produto_pedido, dono_pedido, nome_entregador, preco_pedido, endereco) Values(%s, %s, %s, %s, %s)"
+            insercao_pedido = "INSERT INTO pedidos(produto_pedido, dono_pedido, cpf_entregador, preco_pedido, endereco) Values(%s, %s, %s, %s, %s)"
             
             # Ira executar o comando de inserção.
-            cursor.execute(insercao_pedido, (lista_id, cpf_cliente, nome_entregador, preco_pedido, endereco_entrega))
+            cursor.execute(insercao_pedido, (lista_id, cpf_cliente, cpf_entregador, preco_pedido, endereco_entrega))
             
             # Mensagem que indica o sucesso da execução do trecho de código.
             print("Pedido realizado com sucesso")

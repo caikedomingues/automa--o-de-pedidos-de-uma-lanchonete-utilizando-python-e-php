@@ -1,4 +1,10 @@
 
+
+
+# Searching for element 'botao_copiar'
+
+
+
 # Import da classe DesktopBot do módulo core da biblioteca
 # BotCity que tera como objetivo "transferir" os seus metodos
 # para a classe bot que ira conter os códigos necessários para 
@@ -101,7 +107,7 @@ class Bot(DesktopBot):
                 # enviou a mensagem.
                 self.click()
                 
-                # Searching for element 'mensagem_cliente'. Codigo gerado pelo BotCity
+                # Searching for element 'mensagem_cliente'.CodigogeradopeloBotCit y
                 # que irá identificar a mensagem enviada pelo cliente.
                 if not self.find("mensagem_cliente", matching=0.97, waiting_time=10000):
                     self.not_found("mensagem_cliente")
@@ -112,11 +118,13 @@ class Bot(DesktopBot):
                 # Ira clicar com o botão direito na mensagem do cliente
                 self.right_click()
                 
-                # Searching for element 'botao_copiar. Codigo gerado pelo botcity
+                # Searching for element 'botao_copiar.Codigogeradopelobotcit y
                 # que irá identificar o botão de copiar mensagem da mensagem enviada
                 # pelo usuário
-                if not self.find("botao_copiar", matching=0.8, waiting_time=10000):
-                    self.not_found("botao_copiar")
+                if not self.find("botao_copiar", matching=0.97, waiting_time=10000):
+                     self.not_found("botao_copiar")
+                
+                # Ira clicar no botão de copiar mensagem
                 self.click()
                 # Ira armazenar a mensagem enviada pelo usuário com o objetivo de realizar
                 # comparações na estrutura condicional que irá guiar a conversa do sistema
@@ -289,7 +297,7 @@ class Bot(DesktopBot):
                      
                      self.paste("Não entendi a solicitação, por favor, mande um 'ola' e reinicie a conversa")
                      
-                     # Searching for element 'enviar_mensagem '
+                     # Searching for element 'enviar_mensagem'
                      enviar_mensagem()
                      
                      self.key_esc()    
@@ -310,6 +318,14 @@ class Bot(DesktopBot):
 if __name__ == '__main__':
     # Ira criar a classe bot
     Bot.main()
+
+
+
+
+
+
+
+
 
 
 

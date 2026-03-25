@@ -58,6 +58,10 @@
             # (um cliente, um usuário ou um administrador).
             $_SESSION['login_entregador'] = true;
 
+            # Vamos coletar o cpf logado para conseguirmos consultar os 
+            # pedidos na página de status de entregas.
+            $_SESSION['cpf_entregador'] = $entregador->getcpf_entregador();
+
             # Vamos transferir o entregador para a pagina de status
             # de entregas
             header("Location: StatusEntrega.php");
