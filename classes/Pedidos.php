@@ -47,7 +47,9 @@ class Pedidos{
 
                         # Se a vraiável não existir ou tiver o false como valor, vamos encerrar a execução
                         # do sistema e imprimir essa mensagem.
-                        die("Realize o login para ver as suas entregas");
+                        echo("Realize o login para ver as suas entregas");
+
+                        echo "<br><a href='loginEntregador.php'>Voltar a página de login</a>";
 
                     }else{
 
@@ -108,7 +110,7 @@ class Pedidos{
             }
 
             # Função que irá atualizar os status das entregas do entregador cadastrado.
-            public function atualizarStatus($codigo_pedido){
+            public function atualizarStatus(){
 
                 # Irá inspecionar o bloco de código com o objetivo
                 # de capturar possiveis erros de execução.
@@ -144,10 +146,6 @@ class Pedidos{
                     # de pedidos feitos usando o cpf do entregador logado. 
                     $resultas_atualizacao_quantidade->execute([':cpf_entregador'=>$this->getcpf_entregador()]);
 
-                    # Mensagem de sucesso da execução do código.
-                    echo "Status atualizado com sucesso, o pedido será
-                    atualizado em breve";
-
 
                 }catch(PDOException $erro){
                     # Exceção que irá lidar com operações no banco de dados. Nesse caso, ele ira encerrar a execução do
@@ -156,6 +154,82 @@ class Pedidos{
 
                 }
 
+            }
+            # Será responsável por mostrar o historico de entregas
+            # do entregador.
+            public function historicoEntregas(){
+
+                # Ira verificar a existência da sessão. Basicamente,
+                # ele irá verificar se a superglobal existe ou se
+                # o seu valor é diferente de verdadeiro.
+                if(!isset($_SESSION['login_entregador']) || $_SESSION['login_entregador'] != true){
+
+                    # Se essa condição for verdadeira, vamos imprimir
+                    # essa mensagem e disponibilizar para o usuário
+                    # voltar a página de login de entregador..
+                    echo("Realize o login para ver o seu historico de entregas");
+
+                    echo "<br><a href='loginEntregador.php'>Voltar a página de login</a>";
+                }else{
+
+                    # Irá inspecionar o bloco de código com o objetivo
+                    # de capturar possiveis erros de execução.
+                    try{
+
+                        # Ira conter a consulta das entregas realizadas
+                        # pelo entregador cadastrado no sistema.
+                         $consulta_entregas = "SELECT codigo_pedido, produto_pedido, dono_pedido, status_entrega, data_pedido, endereco, preco_pedido FROM pedidos WHERE cpf_entregador = :cpf_entregador AND status_entrega = 'Entregue'";
+                        
+                         # Ira garantir que tudo que for executado
+                         # após o execute seja interpretado como texto,
+                         # dessa forma, vamos garantir que o unico
+                         # comando executado seja o que definimos
+                         # anteriormente.
+                         $resultado_consulta = $this->conexao->prepare($consulta_entregas);
+                        
+                        # Nessa etapa vamos executar o comando filtrado pelo prepare.
+                         $resultado_consulta->execute([':cpf_entregador'=>$this->getcpf_entregador()]);
+                          
+                         # Ira acessar todas as linhas retornadas e criara um array associativo que possibilitara
+                         # o acesso aos dados através dos nomes das colunas solicitadas no SELECT
+                         $entregas = $resultado_consulta->fetchAll(PDO::FETCH_ASSOC);
+                        
+                         # Irá verificar se há existência de registros
+                         # na consulta realizada.
+                         if($entregas){
+
+                            # Caso a consulta retorne registros, vamos
+                            # criar um for que irá percorrer a lista
+                            # de valores encontrados com o objetivo 
+                            # de imprimir na página, os valores 
+                            # encontrados.
+                            for($i=0; $i < count($entregas); $i++){
+
+                                # Impressão dos valores encontrados.
+                                echo "Código: ".$entregas[$i]['codigo_pedido']." | Produto: ".$entregas[$i]['produto_pedido']." | Dono do pedido: ".$entregas[$i]['dono_pedido']." | Status: ".$entregas[$i]['status_entrega']." | Data: ".$entregas[$i]['data_pedido']. " | endereço: ".$entregas[$i]['endereco']." | preco: ".$entregas[$i]['preco_pedido']."<br><hr>";
+
+                            }
+
+
+                         }else{
+
+                            # Caso o usuário não tenha entregas concluidas, vamos imprimir essa mensagem.
+                            echo "Você ainda não realizou entregas";
+                         }
+
+
+                    }catch(PDOException $erro){
+
+                        # Ira lidar com erros relacionados a operações no
+                        # banco de dados. Nesse caso, vamos encerrar a 
+                        # execução do método e imprimir essa mensagem.s
+                        die("Falha na consulta dos dados: ".$erro->getMessage());
+
+                    }
+                   
+
+
+                }
             }
 
 

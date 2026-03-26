@@ -16,58 +16,39 @@
                 <div class="col-md-10">
                     <div class="card shadow-sm">
                         <div class="card-header bg-warning text-dark fw-bold">
-                            Lista de Pedidos Pendentes
+                            Histórico de Entregas Realizadas
                         </div>
                         <div class="card-body">
                             <div class="p-3 bg-white border rounded">
 
                                 <?php
                                     
-                                    # Ira permitir que o sistema acesse os dados da superglobal $_SESSION.
+                                    # Ira permitir que o sistema acesse os dados da superglobal $_SESSION de
+                                    # entregadores.
                                     session_start();
-                                    
-                                    # Ira importar para o arquivo as classes que serão utilazadas no
-                                    # sistema.
+
+                                    # Ira importar para o arquivo as classes que serão utilizadas nessas
+                                    # páginas
                                     require_once '../classes/BancoDeDados.php';
-
-                                    require_once '../classes/Pedidos.php';
-
+                                    require_once '../classes/pedidos.php';
+                                    
                                     # Ira instanciar a classe banco de dados que possui a conexão
                                     # com o servidor.
                                     $banco = new BancoDeDados();
                                     
                                     # Ira conter a conexão com o banco de dados.        
                                     $conexao = $banco->conexaoBanco();
-
-                                    # Ira instanciar a classe de Pedidos
-                                    # que irá receber como argumento
-                                    # em seu construtor a conexão com
-                                    # o banco de dados.
-                                    $pedidos = new Pedidos($conexao);
-
-                                    # Ira coletar o cpf do usuário logado usando a função setter
-                                    # com o objetivo de acessarmos o valor através do getter.
-                                    $pedidos->setcpf_entregador($_SESSION['cpf_entregador']);
-
-                                    # Ira verificar se a requisição enviada é do tipo POST
-                                    # (envio de dados) com o objetivo de só processar o 
-                                    # resultado gerado pelo botão se houver o envio de dados.
-                                    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                                        
-                                        # Se a requisição for do tipo POSST, vamos chamar o metodo
-                                        # de atualização do status da
-                                        # entrega.
-                                        $pedidos->atualizarStatus();
-                                    }
-
-                                    # Ira chamar a função que irá 
-                                    # consultar e mostrar os pedidos pendentes do entregador
-                                    $pedidos->visualizarPedidos();
-
-
                                     
+                                    # Ira instanciar a classe de Pedidos    
+                                    $pedidos = new Pedidos($conexao);
+                                    
+                                    # Ira settar o cpf do entregador logado que vamos utilizar na consulta
+                                    # através do método get.
+                                    $pedidos-> setcpf_entregador($_SESSION['cpf_entregador']);
 
-
+                                    # Irá chamar a função de historicos de
+                                    # entregas.
+                                    $pedidos -> historicoEntregas();
                                 ?>
 
                                 

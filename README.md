@@ -111,7 +111,7 @@ de informa-lo ao entregador.
 
 -> tela de login dos entregadores: finalizado
 
--> tela de mudança de status de entrega
+-> tela de mudança de status de entrega: Finalizado
 
 -> tela de cadastro de entregadores: Finalizado
 
@@ -121,9 +121,9 @@ de informa-lo ao entregador.
 
 -> Tela de informações de produtos
 
--> Tela de informações de pedidos
+-> Tela de informações de pedidos (pagina de entregues e não entregues)
 
--> Tela de informações de pedidos entregues
+-> historico de pedidos entregues.
 
 -> tela de informações dos entregadores
 
