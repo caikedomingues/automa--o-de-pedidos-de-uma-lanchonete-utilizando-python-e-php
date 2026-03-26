@@ -123,12 +123,12 @@ de informa-lo ao entregador.
 
 -> Tela de informações de pedidos (pagina de entregues e não entregues)
 
--> historico de pedidos entregues.
+-> historico de pedidos entregues: Finalizado
 
 -> tela de informações dos entregadores
 
 -> Tela de exclusão de entregadores.
 
--> Botão de logout.
+-> Botão de logout (penultima etapa): 
 
 -> Criação do menu principal (etapa final)

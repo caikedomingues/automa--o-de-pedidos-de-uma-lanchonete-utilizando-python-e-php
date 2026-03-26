@@ -232,6 +232,73 @@ class Pedidos{
                 }
             }
 
+            # Função que irá mostrar todas as entregas concluidas para
+            # o administrador
+            public function todosPedidosEntregues(){
+
+                # Irá inspecionar o bloco de código com o objetivo de
+                # capturar possiveis erros de execução do bloco.
+                try{
+
+                    # Ira verificar a existência da sessão do usuário. Para realizar a validação,
+                    # o sistema ira verificar se a superglobal existe
+                    # ou se o valor da superglobal é diferente de true.
+                    if(!isset($_SESSION['login_adm']) || $_SESSION['login_adm'] != true){
+
+                        # Se essa condição for verdadira, vamos
+                        # imprimir essa mensagem e disponibilizar
+                        # um link que guiara o usuário para a página
+                        # de login.
+                        echo "É necessário realizar login antes de visualizar os pedidos";
+
+                        echo "<br><a href='index.php'>Voltar a página de login</a>";
+
+                    }else{
+
+                        # Se a sessão for criada corretamente, vamos 
+                        # iniciar o processo de consulta no banco de
+                        # dados.
+
+                        # Irá conter o comando que irá consultar os dados.
+                        $consulta_entregas = "SELECT * FROM pedidos WHERE status_entrega = 'Entregue'";
+
+                        # Irá garantir que qualquer comando executado após o execute seja interpretado
+                        # como texto, dessa forma, o sistema só ira
+                        # executar o comando select que definimos
+                        # anteriormente.
+                        $resultado_consulta = $this->conexao->prepare($consulta_entregas);
+
+                        # Irá executar apenas o SELECT definido na
+                        # variável consulta.
+                        $resultado_consulta->execute();
+
+                        # Irá acessar todas as linhas encontradas e criará um array associativo que possibilitará
+                        # o acesso dos dados através dos nomes das colunas
+                        # definidas no banco.
+                        $entregas_realizadas = $resultado_consulta->fetchAll(PDO::FETCH_ASSOC);
+
+                        if($entregas_realizadas){
+
+                            for($i=0; $i < count($entregas_realizadas); $i++){
+
+                                echo "Código: ". $entregas_realizadas[$i]['codigo_pedido']." | Produto: ".$entregas_realizadas[$i]['produto_pedido']." | dono: ".$entregas_realizadas[$i]['dono_pedido']." | data: ".$entregas_realizadas[$i]['data_pedido']." | endereço: ".$entregas_realizadas[$i]['endereco']." | preço: ".$entregas_realizadas[$i]['preco_pedido']." | cpf do entregador: ".$entregas_realizadas[$i]['cpf_entregador']."<br><hr>";
+                            }
+
+                        }else{
+
+                            echo "Não há entregas concluidas no momento";
+                        }
+                    }
+
+
+                }catch(PDOException $erro){
+
+                    die("Flaha na consulta das entregas: ".$erro->getMessage());
+
+                }
+
+            }
+
 
 }
 
