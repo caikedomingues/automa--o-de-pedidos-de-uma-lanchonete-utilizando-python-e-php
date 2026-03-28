@@ -277,8 +277,11 @@ class Pedidos{
                         # definidas no banco.
                         $entregas_realizadas = $resultado_consulta->fetchAll(PDO::FETCH_ASSOC);
 
-                        if($entregas_realizadas){
+                        # Irá verificar se a consulta retornou registros.
+                        if($entregas_realizadas){ 
 
+                            # Se a consulta retornar registros, vamos percorrer a lista de dados usando um for
+                            # com o objetivo de acessar e imprimir os dados.  
                             for($i=0; $i < count($entregas_realizadas); $i++){
 
                                 echo "Código: ". $entregas_realizadas[$i]['codigo_pedido']." | Produto: ".$entregas_realizadas[$i]['produto_pedido']." | dono: ".$entregas_realizadas[$i]['dono_pedido']." | data: ".$entregas_realizadas[$i]['data_pedido']." | endereço: ".$entregas_realizadas[$i]['endereco']." | preço: ".$entregas_realizadas[$i]['preco_pedido']." | cpf do entregador: ".$entregas_realizadas[$i]['cpf_entregador']."<br><hr>";
@@ -286,6 +289,8 @@ class Pedidos{
 
                         }else{
 
+                            # Caso a consulta não retorne nenhum dado,
+                            # vamos imprimir essa mensagem.
                             echo "Não há entregas concluidas no momento";
                         }
                     }
@@ -293,7 +298,9 @@ class Pedidos{
 
                 }catch(PDOException $erro){
 
-                    die("Flaha na consulta das entregas: ".$erro->getMessage());
+                    # Ira lidar com erros nas operações com o banco de dados. Nesse caso, vamos encerrar a conexão com o
+                    # banco e imprimir essa mensagem. 
+                    die("Falha na consulta das entregas: ".$erro->getMessage());
 
                 }
 

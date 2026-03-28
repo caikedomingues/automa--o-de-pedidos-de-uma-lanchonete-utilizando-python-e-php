@@ -22,17 +22,28 @@
                             <div class="p-3 bg-white border rounded">
 
                                 <?php
+                                    # Ira Permitir o acesso ao valor da
+                                    # da variável $_SESSION que conterá
+                                    # as informações da sessão.
                                     session_start();
 
+                                    # Ira importar as classes que serão
+                                    # utilizadas no sistema.
                                     require_once '../classes/BancoDeDados.php';
                                     require_once '../classes/Pedidos.php';
 
+                                    # Ira instanciar o banco que irá conter a conexão com o banco de dados 
                                     $banco = new BancoDeDados();
-
+                                    
+                                    # Ira conter a conexão com o banco de dados.
                                     $conexao = $banco->conexaoBanco();
-
+                                    
+                                    # Ira instanciar a classe de Pedidos que receberá como argumento em seu
+                                    # construtor a conexão com o banco
+                                    # de dados.  
                                     $pedidos = new Pedidos($conexao);
 
+                                    # Ira chamar o método que irá consultar os pedidos entregues no sistema.
                                     $pedidos->todosPedidosEntregues();
 
                                 ?>
