@@ -107,13 +107,13 @@ de informa-lo ao entregador.
 
                                                         Paginas do sistema
 
--> tela de login do administrador (pagina inicial): Finalizado
+index.php-> tela de login do administrador (pagina inicial): Finalizado
 
--> tela de login dos entregadores: finalizado
+LoginEntregador.php-> tela de login dos entregadores: finalizado
 
--> tela de mudança de status de entrega: Finalizado
+StatusEntregas.php-> tela de mudança de status de entrega: Finalizado
 
--> tela de cadastro de entregadores: Finalizado
+CadastroEntregador.php-> tela de cadastro de entregadores: Finalizado
 
 -> tela de cadastro de produtos
 
@@ -121,9 +121,9 @@ de informa-lo ao entregador.
 
 -> Tela de informações de produtos
 
--> Tela de informações de pedidos (pagina de entregues e não entregues)
+-> Tela de informações de pedidos (TodasEntregasRealizadas.php e EntregasaCaminho.php): Finalizado
 
--> historico de pedidos entregues: Finalizado
+HistoricoEntregas.php-> historico de pedidos entregues: Finalizado
 
 -> tela de informações dos entregadores
 

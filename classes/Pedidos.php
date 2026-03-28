@@ -47,9 +47,7 @@ class Pedidos{
 
                         # Se a vraiável não existir ou tiver o false como valor, vamos encerrar a execução
                         # do sistema e imprimir essa mensagem.
-                        echo("Realize o login para ver as suas entregas");
-
-                        echo "<br><a href='loginEntregador.php'>Voltar a página de login</a>";
+                        die("Por favor, realize o login para visualizar os pedidos."."<a href='LoginEntregador.php'>Voltar a página de login</a>");
 
                     }else{
 
@@ -303,6 +301,79 @@ class Pedidos{
                     die("Falha na consulta das entregas: ".$erro->getMessage());
 
                 }
+
+            }
+
+            # Função que irá mostrar para o administrador, todas as 
+            # entregas.  
+            public function TodasEntregasNaoRealizadas(){
+
+                # Ira inspecionar o bloco de código com o objetivo de
+                # capturar possiveis erros de execução.
+                try{
+
+                    # Ira verificar a existência da sessão do usuário.
+                    # Basicamente, o if irá verificar a existência
+                    # da superglobal ou o valor atrubuido a ela.
+                    if(!isset($_SESSION['login_adm']) || $_SESSION['login_adm'] != true){
+
+                        # Se essa condição for verdadeira, vamos imprimir
+                        # essa mensagem e disponibilizar para o usuário
+                        # um link para voltar a página de login.
+                        echo "Por favor, realize o login para visualizar as entregas";
+
+                        echo "<br><a href='index.php'>Voltar a página de login</a>";
+
+                    }else{
+
+                        # Se a sessão existir, vamos iniciar o processo
+                        # de consulta dos dados no sistema.
+                        $consulta_entregas = "SELECT * FROM pedidos WHERE status_entrega = 'Pedido a caminho'";
+
+                        # Ira garantir que todo comando após o execute
+                        # seja considerado um texto. Dessa forma, iremos
+                        # garantir que apenas o comando definido pelo
+                        # desenvolvedor seja executado.
+                        $resultado_consulta = $this->conexao->prepare($consulta_entregas);
+                        
+                        # Ira executar o comando de consulta.
+                        $resultado_consulta->execute();
+
+                        # Ira acessar todas as linhas dos dados encontrados e criará um array associativo
+                        # que irá possibilitar o acesso aos dados
+                        # através dos nomes das colunas.
+                        $entregas_encontradas = $resultado_consulta->fetchAll(PDO::FETCH_ASSOC);
+                        
+                        # Ira verificar se existe registros no banco de dados.
+                        if($entregas_encontradas){
+                            
+                            # Se essa condição for verdadeira, vamos percorrer a lista usando um for com o objetivo
+                            # de acessar e imprimir os dados.
+                            for($i = 0; $i < count($entregas_encontradas); $i++){
+
+                                # Impressão dos dados.
+                                echo "Código: ".$entregas_encontradas[$i]['codigo_pedido']." | Produto: ".$entregas_encontradas[$i]['produto_pedido']." | Dono do pedido ".$entregas_encontradas[$i]['dono_pedido']." | Status da entrega: ".$entregas_encontradas[$i]['status_entrega']." | Data do pedido: ".$entregas_encontradas[$i]['data_pedido']." | Endereço: ".$entregas_encontradas[$i]['endereco']." | Preço: ".$entregas_encontradas[$i]['preco_pedido']." | cpf do entregador: ".$entregas_encontradas[$i]['cpf_entregador']."<br><hr>";
+
+                            }
+
+                        }else{
+
+                            # Caso não tenha entregas pendentes, vamos imprimir
+                            # essa mensagem.
+                            echo "Não há entregas sendo realizadas no momento";
+                        }
+
+                    }
+
+
+                }catch(PDOException $erro){
+                    
+                    # Ira lidar com erros relacionados a consulta com o
+                    # banco de dados. Nesse caso iremo encerrar a execução do método e imprimir essa mensagem.
+                    die ("Falha na consulta dos dados: ".$erro->getMessage);
+
+                }
+
 
             }
 

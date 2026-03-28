@@ -97,8 +97,9 @@ class Bot(DesktopBot):
             
             # Código gerado pelo botcity que irá monitorar o campo de notificações
             # com o objetivo de identificar novas mensagens.
+            # Searching for element 'nova_mensagem '
             nova_mensagem = self.find("nova_mensagem", matching=0.97, waiting_time=10000)
-             
+        
              # Ira verificar se há uma nova mensagem no campo de notificações do whatsapp
             if nova_mensagem:
                 
@@ -318,49 +319,3 @@ class Bot(DesktopBot):
 if __name__ == '__main__':
     # Ira criar a classe bot
     Bot.main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
