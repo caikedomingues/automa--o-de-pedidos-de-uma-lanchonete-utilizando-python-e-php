@@ -44,10 +44,17 @@
                                     # em seu construtor a conexão com
                                     # o banco de dados.
                                     $pedidos = new Pedidos($conexao);
-
-                                    # Ira coletar o cpf do usuário logado usando a função setter
-                                    # com o objetivo de acessarmos o valor através do getter.
-                                    $pedidos->setcpf_entregador($_SESSION['cpf_entregador']);
+                                    
+                                    # Para evitar erros de variável 
+                                    # indefinida caso o usuário não
+                                    # realize login, vamos criar um
+                                    # if que irá verificar a existência
+                                    # da superglobal $_SESSION.
+                                    if(isset($_SESSION['cpf_entregador'])){
+                                        # Ira coletar o cpf do usuário logado usando a função setter
+                                        # com o objetivo de acessarmos o valor através do getter.
+                                        $pedidos->setcpf_entregador($_SESSION['cpf_entregador']);
+                                    }
 
                                     # Ira verificar se a requisição enviada é do tipo POST
                                     # (envio de dados) com o objetivo de só processar o 

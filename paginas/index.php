@@ -57,7 +57,7 @@
                     $_SESSION['usuario'] = $adm->getUsuarioInformado();
 
                     # Após o login, vamos transferir o adm para a página de pedidos.
-                    header("Location: Pedidos.php");
+                    header("Location: EntregasaCaminho.php");
 
                     # Garante que a página encerre a execução após o redirecionamento,
                     # dessa forma, o sistema não processara mais a pagina e a tornara

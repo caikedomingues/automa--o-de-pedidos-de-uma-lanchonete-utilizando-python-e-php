@@ -17,16 +17,20 @@ pelo whatsapp com o objetivo de mostra-los em uma interface feita em html, css e
 
  -> poderá visualizar as informações dos entregadores.
 
+ -> Poderá visualizar as informações dos pedidos
+
+ -> poderá pesquisar informações dos pedidos, entregadores e produtos.
+
                                     Clientes
 -> Ira interagir com o sistema via whatsapp com o objetivo de realizar
 pedidos.
 
--> Ira receber informações dos pedidos realizados.
+-> Ira receber informações do pedidos realizado.
 
                                     Entregadores    
 -> irão mudar os status de suas entregas.
 
-                                Ferramanetas
+                                Ferramentas
 
 
                                     Python 3.12.10
@@ -128,6 +132,12 @@ HistoricoEntregas.php-> historico de pedidos entregues: Finalizado
 -> tela de informações dos entregadores
 
 -> Tela de exclusão de entregadores.
+
+-> pesquisar entregadores
+
+-> pesquisar pedidos
+
+-> pesquisar produtos
 
 -> Botão de logout (penultima etapa): 
 

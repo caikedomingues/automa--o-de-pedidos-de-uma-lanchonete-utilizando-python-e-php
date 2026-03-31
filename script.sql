@@ -147,6 +147,14 @@ alter table pedidos drop column nome_entregador;
 # Inserindo pedidos para testar a página de status de entregas
 INSERT INTO pedidos( produto_pedido, dono_pedido, endereco, preco_pedido, cpf_entregador) VALUES('2', '98635478293', 'jardim planalto', '14','90934839021');
 
+INSERT INTO pedidos( produto_pedido, dono_pedido, endereco, preco_pedido, cpf_entregador) VALUES('2', '98635478293', 'jardim planalto', '14','90934839021');
+
+delete from produtos where id = 5;
+
+# Vamos adicionar a quantidade de vendas o valor padrão 0 para produtos que ainda não foram vendidos;
+
+alter table produtos modify column quantidade_vendas int default 0; 
+
 # Verificando se os dados foram inseridos corretamente.
 select * from pedidos;
 

@@ -39,7 +39,7 @@ def consultarprodutos():
     cursor = conexao.cursor()
     
     # Ira conter o comando que realiza a consulta ao banco de dados.     
-    consulta = "SELECT id_produto, nome_produto, preco from produtos"
+    consulta = "SELECT id_produto, nome_produto, preco, categoria from produtos"
     
     # Ira executar o comando de consulta
     cursor.execute(consulta)
@@ -64,12 +64,14 @@ def consultarprodutos():
         # Ira retornar o preço do produto (3° coluna retornada pelo banco).
         preco = produto[2]
         
+        categoria = produto[3]
+        
         # Ira conter a mensagem com todos os elementos consultados.
         # Observação: Como não queremos substituir os valores da
         # variável vamos atribuir eles usando um +=, dessa forma,
         # ele ira adicionar os dados ao invés de substitui-los pelo
         # próximo valor encontrado na lista
-        mensagem += f"\n{id_produto} - {nome_produto}  {preco}\n"
+        mensagem += f"\n{id_produto} - {nome_produto}  {preco} - {categoria}\n"
         
     
     # A função ira retornar a mensagem formatada com os valores
