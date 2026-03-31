@@ -2,33 +2,51 @@
 
 <?php
 
+    # Ira conter os valores da variável $_SESSION['login_adm']
     session_start();
-
+    
+    # Ira importar as classes que serão utilizadas na construção
+    # dessa página.
     require_once '../classes/BancoDeDados.php';
 
     require_once '../classes/Produto.php';
 
+    # Ira instanciae a classe BancoDeDados que irá conter a conexão
+    # com o banco de dados.
     $banco = new BancoDeDados();
 
+    # Variável que irá conter a conexão com o banco de dados (
+    # valor retornado pelo método conexaoBanco)
     $conexao = $banco->conexaoBanco();
 
+    # Ira instanciar a classe Produto.
     $produto = new Produto($conexao);
 
+    # Irá verificar se a requisição enviada ao servidor é do tipo
+    # POST (envio de dados do servidor). Dessa forma o formulário
+    # só terá os seus campos processados se houver o envio de valores    
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+        # Se essa condição for verdadeira, significa que os campos
+        # possuem valores para enviar ao servidor.
+        
+        # Ira usar a variável superglobal para coletar os valores informados nos campos. Usaremos os names definidos nos inputs
+        # para identificar ao $_POST os valores que ele deve coletar.
         $nome = $_POST['nome_produto'];
 
         $preco = $_POST['preco'];
 
         $categoria = $_POST['categoria'];
 
+        # Ira settar os valores coletados com o objetivo de acessa-los
+        # através dos getters.
         $produto->setnome_produto($nome);
 
         $produto->setpreco($preco);
 
         $produto->setcategoria($categoria);
 
-
+        # Ira chamar o método de cadastro de produtos.
         $produto->cadastrarProduto();
 
     }
