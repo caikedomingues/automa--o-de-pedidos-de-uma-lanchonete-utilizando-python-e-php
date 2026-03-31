@@ -119,7 +119,7 @@ StatusEntregas.php-> tela de mudança de status de entrega: Finalizado
 
 CadastroEntregador.php-> tela de cadastro de entregadores: Finalizado
 
--> tela de cadastro de produtos
+-> tela de cadastro de produtos: Finalizado
 
 -> Tela ou botão de exclusão de produtos.
 
