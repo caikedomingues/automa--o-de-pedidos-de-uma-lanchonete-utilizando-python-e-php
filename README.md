@@ -79,7 +79,7 @@ entregas).
 
 -> Para mudar o status o entregador deve realizar um login usando
 o seu cpf e a uma senha.
--> Para mudar o status da entrega o entregador devera logar no sistema usando o seu cpf e senha
+
 
 -> Não há restriçoes para as senhas de entregadores.
 
@@ -104,6 +104,10 @@ o seu cpf e a uma senha.
 -> O administrador poderá ver as informações de todos os entregadores
 
 -> O administrador poderá ver as informações sobre os produtos cadastrados.
+
+-> Somente o administrador poderá pesquisar sobre produtos, preços e 
+pedidos (os pedidos poderão ser encontrados usando o cpf do cliente
+que o realizou).
 
 -> O cliente deve receber o codigo ao finalizar o pedido com o objetivo
 de informa-lo ao entregador.
@@ -139,6 +143,9 @@ HistoricoEntregas.php-> historico de pedidos entregues: Finalizado
 
 -> pesquisar produtos
 
+-> Filtra produtos por categoria(Adicionar a quantidade de produtos encontrados da categoria).
+
 -> Botão de logout (penultima etapa): 
 
 -> Criação do menu principal (etapa final)
+

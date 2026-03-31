@@ -109,6 +109,46 @@
             }
 
         }
+
+        public function listarProdutos(){
+
+            try{
+
+                if(!isset($_SESSION['login_adm']) || $_SESSION['login_adm'] != true){
+
+                    echo "<p>Por favor, realize um login para ver as informações dos produtos</p>";
+
+                    echo "<a href='index.php'> Voltar a página de login</a>";
+
+                }else{
+
+                    $consulta_produtos = "SELECT * FROM produtos";
+
+                    $resultado_consulta = $this->conexao->prepare($consulta_produtos);
+
+                    $resultado_consulta->execute();
+
+                    $produtos = $resultado_consulta->fetchAll(PDO::FETCH_ASSOC);
+
+                    if($produtos){
+
+                        for($i = 0; $i < count($produtos); $i++){
+
+                            echo "ID: ".$produtos['id_produto']." |  produto: ".$produtos['nome_produto']." | Preço: ".$produtos['preco']. " | categoria: ".$produtos['categoria']." | quantidade de vendas: ".$produtos['quantidade_vendas']."<br><hr>";
+                        }
+
+                    }else{
+
+                        echo "Não há produtos cadastrados";
+                    }
+                }
+
+            }catch(PDOException $erro){
+
+                die("Falha na consulta dos dados: ".$erro->getMessage());
+            }
+
+        }
     }
 
 ?>
