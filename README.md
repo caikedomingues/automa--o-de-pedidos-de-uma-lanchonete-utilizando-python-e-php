@@ -21,6 +21,8 @@ pelo whatsapp com o objetivo de mostra-los em uma interface feita em html, css e
 
  -> poderá pesquisar informações dos pedidos, entregadores e produtos.
 
+ -> poderá editar dados dos produtos e dos entregadores
+
                                     Clientes
 -> Ira interagir com o sistema via whatsapp com o objetivo de realizar
 pedidos.
@@ -73,27 +75,27 @@ entregas).
 
                                         Regras de Negócio
 
--> Para acessar o sistema o administrador deverá fornecer um login e senha.
+-> Para acessar o sistema o administrador deverá fornecer um login e senha: Finalizado
 
--> Somente o entregador poderá mudar o status das entregas (só a partir disso iremos atribuir uma entrega a mais na coluna de quantidade de pedidos feitos).
+-> Somente o entregador poderá mudar o status das entregas (só a partir disso iremos atribuir uma entrega a mais na coluna de quantidade de pedidos feitos): Finalizado
 
 -> Para mudar o status o entregador deve realizar um login usando
-o seu cpf e a uma senha.
+o seu cpf e a uma senha: Finalizado.
 
 
--> Não há restriçoes para as senhas de entregadores.
+-> Não há restriçoes para as senhas de entregadores: Finalizado.
 
 -> O sistema devera verificar se uma sessão foi iniciada antes de permitir que uma ação seja executada
 
--> Somente o administrador do sistema poderá cadastrar novos entregadores
+-> Somente o administrador do sistema poderá cadastrar novos entregadores: Finalizado
 
--> Um entregador só pode ser cadastrado uma única vez
+-> Um entregador só pode ser cadastrado uma única vez: finalizado.
 
--> Somente o administrador poderá cadastrar produtos
+-> Somente o administrador poderá cadastrar produtos: finalizado
 
--> Ao receber uma mensagem o sistema deve responder mandando a lista de itens disponiveis para a compra
+-> Ao receber uma mensagem o sistema deve responder mandando a lista de itens disponiveis para a compra: Finalizado
 
--> O cliente devera escolher os ids dos produtos que ele quer comprar
+-> O cliente devera escolher os ids dos produtos que ele quer comprar: finalizado
 
 -> Somente o administrador poderá excluir produtos do sistema.
 
@@ -110,7 +112,9 @@ pedidos (os pedidos poderão ser encontrados usando o cpf do cliente
 que o realizou).
 
 -> O cliente deve receber o codigo ao finalizar o pedido com o objetivo
-de informa-lo ao entregador.
+de informa-lo ao entregador.: finalizado
+
+-> Somente o administrador poderá editar dados de produtos e entregadores.
 
 
                                                         Paginas do sistema
@@ -123,9 +127,9 @@ StatusEntregas.php-> tela de mudança de status de entrega: Finalizado
 
 CadastroEntregador.php-> tela de cadastro de entregadores: Finalizado
 
--> tela de cadastro de produtos: Finalizado
+CadastroProdutos.php -> tela de cadastro de produtos: Finalizado
 
--> Tela ou botão de exclusão de produtos.
+InformacoesProdutos.php-> botão de exclusão de produtos.
 
 -> Tela de informações de produtos
 
@@ -144,6 +148,10 @@ HistoricoEntregas.php-> historico de pedidos entregues: Finalizado
 -> pesquisar produtos
 
 -> Filtra produtos por categoria(Adicionar a quantidade de produtos encontrados da categoria).
+
+-> Tela de edição de dados dos produtos.
+
+-> Tela de edição dos dados dos entregadores
 
 -> Botão de logout (penultima etapa): 
 

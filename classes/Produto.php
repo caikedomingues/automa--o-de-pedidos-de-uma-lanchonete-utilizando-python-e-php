@@ -132,14 +132,11 @@
 
                     if($produtos){
 
-                        for($i = 0; $i < count($produtos); $i++){
-
-                            echo "ID: ".$produtos['id_produto']." |  produto: ".$produtos['nome_produto']." | Preço: ".$produtos['preco']. " | categoria: ".$produtos['categoria']." | quantidade de vendas: ".$produtos['quantidade_vendas']."<br><hr>";
-                        }
+                        return $produtos;
 
                     }else{
 
-                        echo "Não há produtos cadastrados";
+                        return "Não há produtos cadastrados";
                     }
                 }
 
@@ -149,6 +146,8 @@
             }
 
         }
+
+       
     }
 
 ?>

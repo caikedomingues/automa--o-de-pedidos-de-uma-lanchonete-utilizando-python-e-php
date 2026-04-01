@@ -152,8 +152,10 @@ INSERT INTO pedidos( produto_pedido, dono_pedido, endereco, preco_pedido, cpf_en
 delete from produtos where id = 5;
 
 # Vamos adicionar a quantidade de vendas o valor padrão 0 para produtos que ainda não foram vendidos;
-
 alter table produtos modify column quantidade_vendas int default 0; 
+
+# Como os valores antigos não recebem o default 0, vamos adiciona-los manualmente na coluna
+update produtos set quantidade_vendas = 0 where id_produto = 6;
 
 # Verificando se os dados foram inseridos corretamente.
 select * from pedidos;
