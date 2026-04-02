@@ -72,9 +72,7 @@
                     # essa mensagem e disponibilizar para o adm o link
                     # que o encaminhara para a página de login de 
                     # administrador.
-                    echo "<p>Por favor, realize um login para cadastrar produtos</p>";
-
-                    echo "<a href='index.php'>Voltar a página de login</a>";
+                    die("<p>Por favor, realize o login para ver os produtos</p> <a href='index.php'> Voltar a página de login</a");
 
                 }else{
 
@@ -110,44 +108,154 @@
 
         }
 
+        # Função que ira mostrar para o administrador todos os produtos
+        # disponiveis na lanchonete.
         public function listarProdutos(){
 
+            # Irá inspecionar o bloco de código com o objetivo de capturar
+            # possiveis erros de execução.
             try{
 
+                # Ira verificar se uma sessão foi iniciada. Basicamente,
+                # o if irá verificar se a superglobal existe ou se o
+                # seu valor é diferente de true.
                 if(!isset($_SESSION['login_adm']) || $_SESSION['login_adm'] != true){
 
-                    echo "<p>Por favor, realize um login para ver as informações dos produtos</p>";
-
-                    echo "<a href='index.php'> Voltar a página de login</a>";
+                    # Irá encerrar a execução do método e imprimirá
+                    # essa mensagem que irá guiar o usuário de volta
+                    # para a página de login de administrador.
+                    die("<p>Por favor, realize um login para ver as informações dos produtos</p><a href='index.php'>Voltar a página de login</a>");
 
                 }else{
 
+                    # Se a sessão existir, vamos iniciar o processo
+                    # que irá mostrar todos os produtos cadastrados.
                     $consulta_produtos = "SELECT * FROM produtos";
 
+                    # Irá garantir que todo comando após o execute
+                    # seja considerado como texto, dessa forma, iremos
+                    # garantir que apenas o comando definido na variável
+                    # $consulta_produtos seja executado.
                     $resultado_consulta = $this->conexao->prepare($consulta_produtos);
 
+                    # Irá executar o comando de consulta.
                     $resultado_consulta->execute();
 
+                    # Irá acessar todas as linhas encontradas pelo sistema
+                    # e criará um array associativo que irá possibilitar 
+                    # o acesso dos valores através do nome das colunas
+                    # da tabela consultada. 
                     $produtos = $resultado_consulta->fetchAll(PDO::FETCH_ASSOC);
 
+                    # Ira verificar se a consulta retornou dados.
                     if($produtos){
 
+                        # Se a tabela possuir valores, vamos apenas
+                        # retornar a lista de dados. Vamos fazer isso
+                        # por que na página que irá conter as informações
+                        # nós vamos criar um foreach que irá percorrer
+                        # os valores retornados e ira exibi-los em uma
+                        # div que estilizara a página de produtos.
                         return $produtos;
 
                     }else{
 
+                        # Mensagem que a função irá retornar caso o 
+                        # sistema não tenha dados registrados
                         return "Não há produtos cadastrados";
                     }
                 }
 
             }catch(PDOException $erro){
 
+                # Exceção que irá lidar com operações no banco de dados.
+                # Nesse caso, iremos encerrar a execução do método
+                # e imprimir essa mensagem.
                 die("Falha na consulta dos dados: ".$erro->getMessage());
             }
 
         }
 
-       
+        # Função que irá excluir o produto e os pedidos entregues
+        # relacionados aquele produto. A função irá receber como
+        # argumento o id que foi coletado pelo input hidden da
+        # página de produtos.
+        public function excluirProduto($id_produto){
+            # Ira inspecionar o bloco de código com o objetivo de capturar possiveis
+            # erros de execução.
+            try{
+
+                # Irá verificar se uma sessão foi criada. Basicamente a estrutura irá verificar
+                # se a superglobal $_SESSION existe ou se o seu valor é diferente de true.
+                if(!isset($_SESSION['login_adm']) || $_SESSION['login_adm'] != true){
+                    
+                    # Se a condição do if for verdadeira, vamos imprimir essa mensagem e encerrar a execução do método.
+                    die("<p> Por favor, realize login para excluir um produto</p> <a href='index.php'>Voltar a página de login</a>");
+
+                }else{
+
+                    # Caso o usuário crie uma sessão vamos iniciar o processo de exclusão das tabelas pedidos (que possui uma coluna
+                    # da tabela produtos como chave estrangeira) e produtos. Para evitar erros no historico de entregas a caminho,
+                    # vamos verificar se o item que será excluido possui o seu status como 'Entregue', ou seja, se o pedido que envolve
+                    # aquele produto ja foi finalizado.
+
+                    # Ira conter o comando de consulta do dado. Observação: o ':id_produto' é um rótulo que representa o id que esta sendo
+                    # passado para a consulta. A consulta irá buscar os pedidos que possuem o id do produto excluido e o seu status de
+                    # entrega igual a 'Pedido a caminho'.
+                    $consulta_pedidos = "SELECT * FROM pedidos WHERE produto_pedido = :id_produto AND status_entrega ='Pedido a caminho'";
+
+                    # Ira garantir que todo comando após o execute seja interpretado como texto. Dessa forma,
+                    # evitaremos que o sistema execute comandos que não foram especificados na variável
+                    # consulta_pedidos
+                    $resultado_consulta = $this->conexao->prepare($consulta_pedidos);
+
+                    # Ira executar o comando de consulta utilizando o id passado como argumento.
+                    $resultado_consulta->execute([':id_produto' =>$id_produto]);
+
+                    # Ira contar a quantidade de linhas encontradas
+                    # pelo banco.
+                    $pedidos_a_caminho = $resultado_consulta->rowCount();
+
+                    # Ira verificar se há algum registro de entregas a caminho existe no banco do sistema.
+                    if($pedidos_a_caminho > 0){
+                        
+                        # Se essa condição for verdadeira, vamos imprimir essa mensagem e encerrar a execução do
+                        # método.
+                        die("Você não pode apagar produtos que estão a caminho para entregas");
+
+                    }else{
+
+                        # Caso o pedido nao tenha aquele produto como 'entrega a caminho', vamos iniciar o processo
+                        # de exclusão dos dados.
+
+                        # Ira conter o comando que exclui pedidos relacionados ao produto
+                        $exclusao_pedidos = "DELETE FROM pedidos WHERE produto_pedido = :id_produto";
+
+                        # Ira conter o comando que exclui o produto do sistema
+                        $exclusao_produtos = "DELETE FROM produtos WHERE id_produto = :id_produto";
+
+                        # Prepares que evitarão que outros comandos sejam executados no sistema.
+                        $resultado_exclusao_pedidos = $this->conexao->prepare($exclusao_pedidos);
+
+                        $resultado_exclusao_produtos = $this->conexao->prepare($exclusao_produtos);
+
+                        # Irão executar os comandos de exclusão do sistema
+                        $resultado_exclusao_pedidos->execute([':id_produto'=>$id_produto]);
+
+                        $resultado_exclusao_produtos->execute([':id_produto'=>$id_produto]);
+                        
+                    }
+                }
+
+            }catch(PDOException $erro){
+                
+                # Ira lidar com erros relacionados as operações com o banco de dados. Nesse caso
+                # iremos encerrar a execução do método e imprimiremos essa mensagem.
+                die("Falha na exclusão do produto: ".$erro->getMessage());
+            }
+
+        }
+
     }
 
 ?>

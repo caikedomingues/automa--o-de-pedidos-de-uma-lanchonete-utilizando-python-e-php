@@ -97,15 +97,18 @@ o seu cpf e a uma senha: Finalizado.
 
 -> O cliente devera escolher os ids dos produtos que ele quer comprar: finalizado
 
--> Somente o administrador poderá excluir produtos do sistema.
+-> Somente o administrador poderá excluir produtos do sistema: Finalizado
+
+-> O administrador não poderá excluir produtos que estão a caminho
+para a entrega: finalizado
 
 -> Somente o administrador poderá excluir entregadores do sistema.
 
--> Somente o administrador poderá visualizar todos os pedidos e seus status
+-> Somente o administrador poderá visualizar todos os pedidos e seus status: finalizado.
 
 -> O administrador poderá ver as informações de todos os entregadores
 
--> O administrador poderá ver as informações sobre os produtos cadastrados.
+-> O administrador poderá ver as informações sobre os produtos cadastrados: Finalizado
 
 -> Somente o administrador poderá pesquisar sobre produtos, preços e 
 pedidos (os pedidos poderão ser encontrados usando o cpf do cliente
@@ -129,7 +132,9 @@ CadastroEntregador.php-> tela de cadastro de entregadores: Finalizado
 
 CadastroProdutos.php -> tela de cadastro de produtos: Finalizado
 
-InformacoesProdutos.php-> botão de exclusão de produtos.
+InformacoesProdutos.php-> botão de exclusão de produtos: Finalizado
+
+InformacoesProdutos.php-> botão de edição de informações dos produtos: finalizado
 
 -> Tela de informações de produtos
 
