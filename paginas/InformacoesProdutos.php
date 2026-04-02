@@ -66,7 +66,7 @@
                       </div>
                       <hr class="text-light">
                       <div class="d-flex justify-content-end gap-2">
-                        <a href="EditarProduto.php" class="btn btn-outline-primary btn-sm px-3 rounded-pill">
+                        <a href="EditarProduto.php?id=<?php echo $item_lanchonete['id_produto'];?>" class="btn btn-outline-primary btn-sm px-3 rounded-pill">
                             <i class="bi bi-info-circle me-1"></i> Editar Produto
                         </a>
                         <form action='' method="post">

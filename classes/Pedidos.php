@@ -145,6 +145,7 @@ class Pedidos{
                     $resultas_atualizacao_quantidade->execute([':cpf_entregador'=>$this->getcpf_entregador()]);
 
 
+
                 }catch(PDOException $erro){
                     # Exceção que irá lidar com operações no banco de dados. Nesse caso, ele ira encerrar a execução do
                     # método e imprimir mensagens.

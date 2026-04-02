@@ -256,6 +256,36 @@
 
         }
 
+        public function editarProduto($id_produto){
+
+            try{
+
+                if(!isset($_SESSION['login_adm']) || $_SESSION['login_adm'] != true){
+
+                    die("<p>Por favor, realize login para editar um produto</p><a href='index.php'>Voltar a página de login</a>");
+
+                }else{
+
+                    $comando_atualizacao = "UPDATE produtos SET nome_produto = :nome_produto, preco = :preco,
+                    categoria = :categoria, quantidade_vendas = 0 WHERE id_produto = :id_produto";
+
+                    $resultado_atualizacao = $this->conexao->prepare($comando_atualizacao);
+
+                    $resultado_atualizacao->execute([':nome_produto'=>$this->getnome_produto(), ':preco'=>$this->getpreco(), ':categoria'=>$this->getcategoria(),
+                    ':id_produto'=>$id_produto]);
+
+                    echo "Produto Atualizado";
+                }
+
+
+            }catch(PDOException $erro){
+
+                die("Falha na atualização dos produtos: ".$erro->getMessage());
+
+            }
+
+        }
+
     }
 
 ?>
