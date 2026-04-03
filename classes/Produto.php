@@ -255,31 +255,57 @@
             }
 
         }
-
+        
+        # Função que irá editar os dados dos produtos cadastrados.
+        # A função irá receber como argumento o id passado no
+        # link da tela de edição dos produtos.
         public function editarProduto($id_produto){
 
+            # Ira inspecionar o bloco de código com o objetivo de
+            # capturar possiveis erros de execução.
             try{
 
+                # Ira verificar se uma sessão foi criada. Basicamente
+                # a estrutura irá verificar se a superglobal $_SESSION
+                # existe ou se o valor da superglobal é diferente de
+                # true. 
                 if(!isset($_SESSION['login_adm']) || $_SESSION['login_adm'] != true){
 
+                    # Se essa condição for verdadeira, iremos encerrar
+                    # a execução do método e imprimiremos essa mensagem
+                    # que contém um link que guiara o usuário para
+                    # a página de login de administrador.
                     die("<p>Por favor, realize login para editar um produto</p><a href='index.php'>Voltar a página de login</a>");
 
                 }else{
 
+                    # Se a sessão for criada, vamos iniciar o processo
+                    # de atualização dos dados.
+                    
+                    # Ira conter o comando que irá atualizar os dados
                     $comando_atualizacao = "UPDATE produtos SET nome_produto = :nome_produto, preco = :preco,
                     categoria = :categoria  WHERE id_produto = :id_produto";
 
+                    # Irá garantir que todo comando executado após o
+                    # execute seja considerado como texto. Dessa forma,
+                    # iremos garantir que o unico comando executado seja
+                    # o da variável comando_atualização.
                     $resultado_atualizacao = $this->conexao->prepare($comando_atualizacao);
 
+                    # Ira executar o comando usando os valores dos getters
                     $resultado_atualizacao->execute([':nome_produto'=>$this->getnome_produto(), ':preco'=>$this->getpreco(), ':categoria'=>$this->getcategoria(),
                     ':id_produto'=>$id_produto]);
-
+                    
+                    # Mensagem de sucesso da atualização
                     echo "Produto Atualizado";
                 }
 
 
             }catch(PDOException $erro){
 
+                # Ira lidar com erros relacionados a oprações no
+                # banco de dados. Nesse caso, iremos encerrar a execução
+                # do método e imprimir essa mensagem.
                 die("Falha na atualização dos produtos: ".$erro->getMessage());
 
             }
