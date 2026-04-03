@@ -267,7 +267,7 @@
                 }else{
 
                     $comando_atualizacao = "UPDATE produtos SET nome_produto = :nome_produto, preco = :preco,
-                    categoria = :categoria, quantidade_vendas = 0 WHERE id_produto = :id_produto";
+                    categoria = :categoria  WHERE id_produto = :id_produto";
 
                     $resultado_atualizacao = $this->conexao->prepare($comando_atualizacao);
 

@@ -65,6 +65,12 @@
                                         # de atualização do status da
                                         # entrega.
                                         $pedidos->atualizarStatus();
+                                        
+                                        # Ira atualizar a quantidade de
+                                        # vendas do produto.
+                                        $pedidos->AtualizarQuantidadeVendas();
+
+
                                     }
 
                                     # Ira chamar a função que irá 

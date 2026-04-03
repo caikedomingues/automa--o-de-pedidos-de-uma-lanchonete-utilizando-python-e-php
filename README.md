@@ -119,6 +119,9 @@ de informa-lo ao entregador.: finalizado
 
 -> Somente o administrador poderá editar dados de produtos e entregadores.
 
+-> a quantidade de vendas só sera atualizada se o status da entrega for
+igual a 'Entregue': Finalizado.
+
 
                                                         Paginas do sistema
 

@@ -154,6 +154,46 @@ class Pedidos{
                 }
 
             }
+
+            # Função que irá atualizar a quantidade de vendas após
+            # a mudança de status da entrega. 
+            public function atualizarQuantidadeVendas(){
+
+                # Ira inspecionar o bloco de código com o objetivo de
+                # capturar possiveis erros de execução.
+                try{
+
+                    # Ira consultar o pedido que foi entregue usando
+                    # o cpf do entregador logado e o codigo do pedido 
+                    # entregue
+                   $consultar_venda = "SELECT produto_pedido FROM pedidos WHERE cpf_entregador = :cpf_entregador AND codigo_pedido = :codigo_pedido";
+
+                   # Irá garantir que todo comando executado após
+                   # o execute seja considerado como texto.
+                   $resultado_consulta = $this->conexao->prepare($consultar_venda);
+
+                   # Ira executar a consulta dos dados.
+                   $resultado_consulta->execute([':cpf_entregador'=>$this->getcpf_entregador(), ':codigo_pedido'=>$_POST['codigo_pedido']]);
+
+                   # Irá armazenar a linha encontrada usando um
+                   # array associativo.
+                   $produto_pedido = $resultado_consulta->fetch(PDO::FETCH_ASSOC);
+
+                   # Trecho que irá atualizar a quantidade de vendas do produto consultado 
+                   $atualizar_quantidade = "UPDATE produtos set quantidade_vendas = quantidade_vendas + 1 WHERE id_produto = :id_produto";
+
+                   $resultado_atualizacao = $this->conexao->prepare($atualizar_quantidade);
+
+                   $resultado_atualizacao->execute([':id_produto'=>$produto_pedido['produto_pedido']]);
+
+                }catch(PDOException $erro){
+
+                    # Ira lidar com erros relacionados a operações no
+                    # banco de dados. Nesse caso, iremos encerrar a 
+                    # execução do método e imprimir essa mensagem.
+                    die("Falha na atualização de quantidade de vendas");
+                }
+            }
             # Será responsável por mostrar o historico de entregas
             # do entregador.
             public function historicoEntregas(){
