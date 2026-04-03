@@ -139,7 +139,7 @@ InformacoesProdutos.php-> botão de exclusão de produtos: Finalizado
 
 InformacoesProdutos.php-> botão de edição de informações dos produtos: finalizado
 
--> Tela de informações de produtos
+->InformacoesProduto.php -> Tela de informações de produtos: Finalizado
 
 -> Tela de informações de pedidos (TodasEntregasRealizadas.php e EntregasaCaminho.php): Finalizado
 
@@ -157,7 +157,7 @@ HistoricoEntregas.php-> historico de pedidos entregues: Finalizado
 
 -> Filtra produtos por categoria(Adicionar a quantidade de produtos encontrados da categoria).
 
--> Tela de edição de dados dos produtos.
+-> EditarProduto.php: Tela de edição de dados dos produtos: Finalizado
 
 -> Tela de edição dos dados dos entregadores
 

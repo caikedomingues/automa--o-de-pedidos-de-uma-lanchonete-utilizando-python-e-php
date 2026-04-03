@@ -3,29 +3,49 @@
 
 <?php
 
+    # Ira acessar o valor da superglobal $_SESSION (caso
+    # uma sessão for criada).
     session_start();
 
+    # Ira importar as classes que serão utilizadas nesse arquivo.
     require_once '../classes/BancoDeDados.php';
     require_once '../classes/Produto.php';
 
+    # Irá instanciar a classe banco de dados que possui o método de
+    # conexão com o banco de dados.
     $banco = new BancoDeDados();
 
+    # Ira conter a conexão com o banco de dados.
     $conexao = $banco->conexaoBanco();
 
+    # Ira instanciar a classe produto que recebe como argumento
+    # a conexão com o banco de dados.
     $produto = new Produto($conexao);
 
-
+    # Irá verificar a se a requisição enviada ao servidor é do tipo
+    # post(envio de dados ao servidor). Dessa forma os valores do
+    # formulário só serão processados se houver o envio dos dados
+    # ao servidor. 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+        # Se a requisição for um post, vamos inciar o processo de 
+        # exclusão dos produtos.
+        #Ira coletar o id do botão pressionado
         $id_produto_excluido = $_POST['id_produto'];
 
+        # Ira chamar a função usando como argumento o id do botão
+        # pressionado.
         $produto->excluirProduto($id_produto_excluido);
 
+        # Irá retornar para página de informações de produtos.
         header('Location: InformacoesProdutos.php');
 
+        # Ira encerrar a execução do trecho, ou seja, a execução
+        # da exclusão do dado.
         exit();
     }
 
+    # Irá listar os produtos cadastrados no sistema.
     $listaprodutos = $produto->listarProdutos();
 
 ?>
@@ -51,12 +71,16 @@
                 </div>
         </div>
         <div class="row g-4">
+            <!--Foreach que ira percorrer os valores retornados pela função de listar produtos. Fizemos dessa maneira para
+            garantir que os valores sejam mostrados dentro dos
+            divs definidos pelo bootstrap.-->
             <?php foreach($listaprodutos as $item_lanchonete):?>
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm border-0 rounded-3">
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
+                            <div>   
+                                <!--Nessa etapa iremos acessar os valores usando os nomes de cada coluna do item que esta sendo percorrido pelo foreach-->
                                 <span class="badge bg-warning text-dark mb-2 px-3"><?php echo $item_lanchonete['categoria'];?></span>
                                 <h5 class="card-title fw-bold text-dark mb-0">Produto: <?php echo $item_lanchonete['nome_produto'];?></h5>
                                 <small class="text-muted">ID:<?php echo " ".$item_lanchonete['id_produto'];?></small> </small><br>
@@ -66,18 +90,25 @@
                       </div>
                       <hr class="text-light">
                       <div class="d-flex justify-content-end gap-2">
+                        <!--Link que irá para a página de edição de produtos. Vamos definir no link o valor do id
+                        do produto que será editado.-->
                         <a href="EditarProduto.php?id=<?php echo $item_lanchonete['id_produto'];?>" class="btn btn-outline-primary btn-sm px-3 rounded-pill">
                             <i class="bi bi-info-circle me-1"></i> Editar Produto
                         </a>
+                        <!--Form que irá enviar os dados para a própria
+                         página.-->
                         <form action='' method="post">
+                            <!--Input que irá ter o id do produto que será excluido como valor (que será coletado pelo $_POST posteriormente).-->
                             <input type="hidden" name="id_produto" value="<?php echo $item_lanchonete['id_produto']?>">
 
+                            <!--Botão que irá enviar as informações da página para o servidor.-->
                           <button type="submit" class="btn btn-outline-danger btn-sm px-3 rounded-pill"><i class="bi bi-trash me-1"></i>Excluir</button>
                      </form>
                      </div>
                     </div>
                 </div>
             </div>
+            <!--Fim do foreach-->
             <?php endforeach;?>
             </div>
             

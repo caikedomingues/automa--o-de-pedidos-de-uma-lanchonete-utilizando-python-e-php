@@ -2,27 +2,52 @@
 
 <?php
 
+    # Ira permitir o acesso ao valor definido na superglobal
+    # $_SESSION (se o usuário realizar um login)
     session_start();
+
+    # Irá importar as classes que serão utilizadas no arquivo 
     require_once '../classes/BancoDeDados.php';
     require_once '../classes/Produto.php';
 
+    # Irá instanciar a classe banco de dados que conterá a conexão
+    # com o banco de dados.
     $banco = new BancoDeDados();
 
+    # Ira conter a conexão com o banco de dados.
     $conexao = $banco->conexaoBanco();
 
+    # Ira instanciar a classe produtos que recebe como argumento
+    # a conexão com o banco de dados.
     $produto = new Produto($conexao);
 
+    # Ira verificar se a requisição enviada ao servidor é igual a um
+    # POST (envio de dados do servidor), ou seja, se o botão de tipo
+    # submit foi apertado. Dessa forma, o sistema só processará os dados
+    # do formulário se houver o envio dos valores.
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
+        # Se a requisição for um post, vamos iniciar o processo de edição
+        # dos dados.
+
+        # Ira usar a superglobal $_GET que irá coletar o valor do id
+        # passado no link da página.
         $id_produto = $_GET['id'];
+
+        # Ira coletar os dados informados no formulário usando os names
+        # definidos nos inputs do formulário.
         $nome_produto = $_POST['nome_produto'];
         $preco = $_POST['preco'];
         $categoria = $_POST['categoria'];
-
+        
+        # Ira atribuir os valores coletados nos setters da classe
+        # com o objetivo de acessar esses dados via métodos getters.
         $produto->setnome_produto($nome_produto);
         $produto->setpreco($preco);
         $produto->setcategoria($categoria);
 
+        # Chamada do método usando como argumento o id passado no link
+        # da página.
         $produto->editarProduto($id_produto);
     }
 

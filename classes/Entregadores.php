@@ -342,6 +342,72 @@
 
         }
 
+        # Função que irá mostrar para o adminsitrador do sistema
+        # as informações dos entregadores cadastrados no sistema.
+        public function listarEntregadores(){
+
+            # Irá inspecionar o bloco de código com o objetivo
+            # de capturar possiveis erros de execução.
+            try{
+                
+                # Irá verificar se uma sessão foi criada. Basicamente
+                # a estrutura irá verificar se a superglobal $_SESSION
+                # existe ou se o seu valor é diferente de true.
+                if(!isset($_SESSION['login_adm']) || $_SESSION['login_adm'] != true){
+
+                    # Se essa condição for verdadeira, vamos encerrar
+                    # a execução do método e imprimir essa mensagem
+                    # que contém o link que guiara o usuário para
+                    # a página de login de administrador.
+                    die("<p>Por favor realize login para ver os entregadores</p> <a href='index.php'>Voltar a página de login</a>");
+
+                }else{
+
+                    # Se uma sessão for criada, vamos iniciar o processo
+                    # de consulta dos dados.
+
+                    # Comando que irá conter a consulta dos dados
+                    # dos entregadores.
+                    $consulta_entregadores = "SELECT cpf_entregador, nome_entregador, telefone_entregador, veiculo, quantidade_pedidos_feitos FROM entregadores";
+
+                    # Ira garantir que todo comando executado após
+                    # o execute seja considerado como texto. Dessa 
+                    # forma, iremos garantir que o sistema execute
+                    # apenas o comando definido na variável $consulta_entregadores. 
+                    $resultado_consulta = $this->conexao->prepare($consulta_entregadores);
+
+                    # Irá executar o comando de consulta.
+                    $resultado_consulta->execute();
+
+                    # Ira acessar todas as linhas do banco de dados
+                    # e criará um array associativo que nos possibilita acessar os dados através dos nomes das colunas.
+                    $entregadores = $resultado_consulta->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    # Ira verificar se a consulta encontrou registros.
+                    if($entregadores){
+
+                        # Se essa condição for verdadeira, vamos retornar os dados que serão percorridos pelo foreach 
+                        # na página de informações de produtos
+                        return $entregadores;
+
+                    }else{
+                        
+                        # Caso o banco não tenha registros, vamos retornar essa mensagem
+                        return "Não há entregadores cadastrados";
+                    }
+                }
+
+            }catch(PDOException $erro){
+
+                # Ira lidar com erros relacionados a operações no 
+                # banco de dados. Nesse caso, iremos imprimir essa 
+                # mensagem e encerrar a execução do sistema.
+                die("Falha na consulta dos dados: ".$erro->getMessage());
+            }
+
+        }
+
+
         
 
     }
