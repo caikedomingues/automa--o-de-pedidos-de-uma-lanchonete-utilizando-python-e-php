@@ -407,6 +407,53 @@
 
         }
 
+        # Método que irá excluir os entregadores do sistema.
+        public function excluirEntregador(){
+            # Irá inspecionar o  bloco de código com o objetivo de
+            # capturar possiveis erros de execução do sistema.
+            try{
+
+                # Ira verificar se uma sessão foi criada antes de
+                # iniciar o processo de exclusão. Basicamente
+                # a estrutura irá verificar se o valor da $_SESSION
+                # é diferente de true ou se ela existe no sistema 
+                if(!isset($_SESSION['login_adm']) || $_SESSION['login_adm'] != true){
+
+                    # Se essa condição for verdadeira, vamos imprimir
+                    # essa mensagem e encerrar a execução do sistema.
+                    die("<p>Por favor, realize login para excluir entregadores</p><a href='index.php'> Voltar a página de login</a>");
+
+                }else{
+
+                    # Se uma sessão for criada, vamos iniciar o processo
+                    # de exclusão.
+
+                    # Ira conter o comando de exclusão dos dados.
+                    $exclusao_entregador = "DELETE FROM entregadores WHERE cpf_entregador = :cpf_entregador";
+
+                    # Ira garantir que todo comando executado após o
+                    # execute seja considerado como texto. Dessa forma,
+                    # iremos garantir que o sistema só execute o
+                    # comando especificado na variável passada como
+                    # argumento do prepare.
+                    $resultado_exclusao = $this->conexao->prepare($exclusao_entregador);
+
+                    # Ira executar a exclusão do entregador usando
+                    # o rótulo definido anteriormente e o valor
+                    # acessado pelo getter.
+                    $resultado_exclusao->execute([':cpf_entregador'=>$this->getcpf_entregador()]);
+
+
+                }
+
+            }catch(PDOException $erro){
+
+                # Ira lidar com excessões relacionadas a operações
+                # realizadas no banco de dados. Nesse caso, iremos encerrar a execução do método e exibir essa mensagem 
+                die("Falha na exclusão dos dados: ".$erro->getMessage());
+            }            
+
+        }
 
         
 

@@ -102,11 +102,11 @@ o seu cpf e a uma senha: Finalizado.
 -> O administrador não poderá excluir produtos que estão a caminho
 para a entrega: finalizado
 
--> Somente o administrador poderá excluir entregadores do sistema.
+-> Somente o administrador poderá excluir entregadores do sistema: finalizado
 
 -> Somente o administrador poderá visualizar todos os pedidos e seus status: finalizado.
 
--> O administrador poderá ver as informações de todos os entregadores
+-> O administrador poderá ver as informações de todos os entregadores: finalizado
 
 -> O administrador poderá ver as informações sobre os produtos cadastrados: Finalizado
 
@@ -145,9 +145,9 @@ InformacoesProdutos.php-> botão de edição de informações dos produtos: fina
 
 HistoricoEntregas.php-> historico de pedidos entregues: Finalizado
 
--> tela de informações dos entregadores
+InformacoesEntregadores.php-> tela de informações dos entregadores
 
--> Tela de exclusão de entregadores.
+InfomacoesEntregadores.php-> Botão de exclusão de entregadores: Finalizado
 
 -> pesquisar entregadores
 
