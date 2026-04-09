@@ -21,7 +21,7 @@ pelo whatsapp com o objetivo de mostra-los em uma interface feita em html, css e
 
  -> poderá pesquisar informações dos pedidos, entregadores e produtos.
 
- -> poderá editar dados dos produtos e dos entregadores
+ -> poderá editar dados dos produtos 
 
                                     Clientes
 -> Ira interagir com o sistema via whatsapp com o objetivo de realizar
@@ -31,7 +31,7 @@ pedidos.
 
                                     Entregadores    
 -> irão mudar os status de suas entregas.
-
+->Irão atualizar os seus dados (menos o seu cpf)
                                 Ferramentas
 
 
@@ -110,14 +110,16 @@ para a entrega: finalizado
 
 -> O administrador poderá ver as informações sobre os produtos cadastrados: Finalizado
 
--> Somente o administrador poderá pesquisar sobre produtos, preços e 
+-> Somente o administrador poderá pesquisar sobre produtos, entregadores e 
 pedidos (os pedidos poderão ser encontrados usando o cpf do cliente
 que o realizou).
 
 -> O cliente deve receber o codigo ao finalizar o pedido com o objetivo
 de informa-lo ao entregador.: finalizado
 
--> Somente o administrador poderá editar dados de produtos e entregadores.
+-> Somente o administrador poderá editar dados de produtos: finalizado
+
+-> Somente o entregador poderá editar os seus dados: finalizado.
 
 -> a quantidade de vendas só sera atualizada se o status da entrega for
 igual a 'Entregue': Finalizado.
@@ -139,7 +141,7 @@ InformacoesProdutos.php-> botão de exclusão de produtos: Finalizado
 
 InformacoesProdutos.php-> botão de edição de informações dos produtos: finalizado
 
-->InformacoesProduto.php -> Tela de informações de produtos: Finalizado
+InformacoesProduto.php -> Tela de informações de produtos: Finalizado
 
 -> Tela de informações de pedidos (TodasEntregasRealizadas.php e EntregasaCaminho.php): Finalizado
 
@@ -159,7 +161,7 @@ InfomacoesEntregadores.php-> Botão de exclusão de entregadores: Finalizado
 
 -> EditarProduto.php: Tela de edição de dados dos produtos: Finalizado
 
--> Tela de edição dos dados dos entregadores
+EditarEntregadores.php-> Tela de edição dos dados dos entregadores
 
 -> Botão de logout (penultima etapa): 
 

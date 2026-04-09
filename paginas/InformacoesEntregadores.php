@@ -95,11 +95,6 @@
                       </div>
                       <hr class="text-light">
                       <div class="d-flex justify-content-end gap-2">
-                        <!--Link que irá para a página de edição de entregadores. Vamos definir no link o valor do cpf
-                        do entregador que será editado.-->
-                        <a href="EditarEntregadores.php?cpf=<?php echo $entregador['cpf_entregador'];?>" class="btn btn-outline-primary btn-sm px-3 rounded-pill">
-                            <i class="bi bi-info-circle me-1"></i> Editar Entregador
-                        </a>
                         <!--Form que irá enviar os dados para a própria
                          página.-->
                         <form action='' method="post">

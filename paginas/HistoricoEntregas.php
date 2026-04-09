@@ -42,13 +42,20 @@
                                     # Ira instanciar a classe de Pedidos    
                                     $pedidos = new Pedidos($conexao);
                                     
-                                    # Ira settar o cpf do entregador logado que vamos utilizar na consulta
-                                    # através do método get.
-                                    $pedidos-> setcpf_entregador($_SESSION['cpf_entregador']);
+                                    # Irá verificar se o cpf do usuário
+                                    # logado existe
+                                    if(isset($_SESSION['cpf_entregador'])){     
+                                        # Se essa condição for verdadeira, vamos atribuir
+                                        # o valor do cpf no setter de
+                                        # cpfs de entregador da classe 
+                                        # pedidos.
+                                        $pedidos->setcpf_entregador($_SESSION['cpf_entregador']);
+                                    }
 
-                                    # Irá chamar a função de historicos de
-                                    # entregas.
-                                    $pedidos -> historicoEntregas();
+                                    
+                                    # Ira chamar o método que imprimi
+                                    # os dados
+                                    $pedidos->historicoEntregas();
                                 ?>
 
                                 

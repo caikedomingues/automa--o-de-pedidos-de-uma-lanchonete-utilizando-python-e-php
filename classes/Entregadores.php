@@ -455,6 +455,65 @@
 
         }
 
+        # Função que irá possibilitar que o entregador altere os seus
+        # dados cadastrais.
+        public function editarEntregador(){
+
+            # Irá inspecionar o bloco de código com o objetivo de capturar
+            # possiveis erros de execução.
+            try{
+
+                # Ira verificar se o entregador criou ou não uma sessão.
+                # Basicamente, o if irá verificar se a superglobal existe
+                # ou se o seu valor é diferente de true.
+                if(!isset($_SESSION['login_entregador']) || $_SESSION['login_entregador'] != true){
+
+                    # Se essa condição for verdadeira, vamos imprimir
+                    # essa mensagem e encerrar a execução do sistema.
+                    die("<p>Por favor, realize login para alterar os dados</p><a href='LoginEntregador.php'>Voltar a página de login");
+
+                }else{
+
+                    # Se o entregador criar uma sessão, vamos iniciar
+                    # o processo de atualização dos dados.
+
+                    # Irá conter o comando que irá atualizar os dados
+                    # usando rótulos que irão representar os valores
+                    # que serão inseridos na atualização dos dados.
+                    $atualiza_entregador = "UPDATE entregadores set nome_entregador = :nome_entregador, telefone_entregador = :telefone_entregador, veiculo = :veiculo, senha_entregador = :senha_entregador WHERE cpf_entregador = :cpf_entregador";
+
+                    # Irá garantir que o sistema interprete qualquer comando após o execute como texto. Dessa forma,
+                    # podemos garantir que o sistema execute apenas
+                    # o comando especificado na variável atualiza_entregador.
+                    $resultado_atualizacao = $this->conexao->prepare($atualiza_entregador);
+
+                    # Função que irá criptografar a nova senha do usuário. A função recebe como argumento a senha
+                    # que será criptografada e o padrão do hash que
+                    # ira realizar a criptografia
+                    # PASSWORD_DEFAULT: Argumento que possibilita que
+                    # o padrão de hash seja atualizado automaticamente,
+                    # ou seja, caso o padrão mude, não precisaremos
+                    # mudar nenhuma linha de código.
+                    $nova_senha = password_hash($this->getsenha_entregador(), PASSWORD_DEFAULT);
+
+                    # Ira executar a atualização dos dados.
+                    $resultado_atualizacao->execute([':nome_entregador'=>$this->getnome_entregador(), ':telefone_entregador'=>$this->gettelefone_entregador(), ':veiculo'=>$this->getveiculo(), ':senha_entregador'=>$nova_senha, ':cpf_entregador'=>$this->getcpf_entregador()]);
+
+                    # Mensagem de sucesso
+                    echo "Dados atualizados";
+                }
+
+            }catch(PDOException $erro){
+
+                # Ira lidar com erros relacionados a operações no banco de dados. Nesse caso, iremos encerrar a execução do método
+                # e impriremos.
+                die("Falha na atualização dos dados: ".$erro->getMessage());
+
+            }
+
+
+        }
+
         
 
     }
