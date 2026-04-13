@@ -511,7 +511,69 @@
 
             }
 
+        }
 
+        # Função que irá possibilitar que o administrador pesquise
+        # os dados de um entregador.
+        public function pesquisaEntregadores(){
+
+            # Irá inspecionar o bloco de código com o objetivo de
+            # capturar possiveis erros de execução do trecho.
+            try{
+
+                # Ira verificar se uma sessão foi criada. Basicamente
+                # a estrutura irá verificar se a superglobal SESSION
+                # existe ou se o seu valor é igual a true. 
+                if(!isset($_SESSION['login_adm']) || $_SESSION['login_adm'] != true){
+
+                    # Se essa condição for verdadeira, vamos imprimir essa mensagem que disponibiliza um link para o 
+                    # usuário retornar para a página de login do adm.
+                    die("<p>Por favor, realize login para pesquisar entregadores</p><a href='index.php'>Voltar a página de login");
+
+                }else{
+
+                    # Se uma sessão for criada, vamos iniciar o processo
+                    # de consulta dos dados.
+
+                    # Ira conter o comando de consulta dos dados. O comando irá conter rótulos que irão representar
+                    # o cpf do entregador buscado. 
+                    $consulta_entregadores = "SELECT cpf_entregador, nome_entregador, telefone_entregador, veiculo, quantidade_pedidos_feitos FROM entregadores WHERE cpf_entregador = :cpf_entregador";
+
+                    # Irá garantir que qualquer comando executado após
+                    # o execute seja considerado como texto. Dessa forma,
+                    # vamos garantir o sistema execute apenas o comando
+                    # definido na variável consulta_entregadores.
+                    $resultado_consulta = $this->conexao->prepare($consulta_entregadores);
+
+                    # Irá executar o comando de consulta.
+                    $resultado_consulta->execute([':cpf_entregador'=>$this->getcpf_entregador()]);
+
+                    # Função que irá acessar todas as linhas dos dados
+                    # encontrados.
+                    $dados = $resultado_consulta->fetchAll(PDO::FETCH_ASSOC);
+
+                    # Ira verificar se a consulta encontrou dados.
+                    if($dados){
+
+                        # Caso a consulta encontre dados, vamos retornar
+                        # os dados para atribui-los na lista de valores
+                        # que criaremos no arquivo PesquisarEntregador.php
+                        return $dados;
+
+                    }else{
+                        
+                        # Caso a consulta não encontre dados, vamos retornar uma lista vázia.
+                        return [];
+                    }
+                }
+
+            }catch(PDOException $erro){
+
+                # Irá lidar com erros relacionados a operações no
+                # banco de dados. Nesse caso, iremos encerrar a execução
+                # do método e imprimir essa mensagem.
+                die("Falha na consulta dos dados: ".$erro->getMessage());
+            }
         }
 
         

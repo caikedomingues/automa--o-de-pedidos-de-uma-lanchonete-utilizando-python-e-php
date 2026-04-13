@@ -151,15 +151,13 @@ InformacoesEntregadores.php-> tela de informações dos entregadores
 
 InfomacoesEntregadores.php-> Botão de exclusão de entregadores: Finalizado
 
--> pesquisar entregadores
+PesquisarEntregador.php-> pesquisar entregadores: finalizado
 
 -> pesquisar pedidos
 
 -> pesquisar produtos
 
--> Filtra produtos por categoria(Adicionar a quantidade de produtos encontrados da categoria).
-
--> EditarProduto.php: Tela de edição de dados dos produtos: Finalizado
+EditarProduto.php->Tela de edição de dados dos produtos: Finalizado
 
 EditarEntregadores.php-> Tela de edição dos dados dos entregadores
 

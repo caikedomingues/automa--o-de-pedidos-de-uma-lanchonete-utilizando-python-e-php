@@ -66,7 +66,6 @@
     </head>
 
     <body>
-
         <div class="container py-5">
             <div class="position-relative mb-5 rounded-4 overflow-hidden shadow-sm" style="height: 200px;">
                 <img src="../imagens/imageminformacao.jpg" alt="imagem do entregador" class="w-100 h-100" style="object-fit: cover; filter: brightness(0.6);">
