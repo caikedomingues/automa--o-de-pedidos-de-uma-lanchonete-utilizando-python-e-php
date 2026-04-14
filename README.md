@@ -155,13 +155,13 @@ PesquisarEntregador.php-> pesquisar entregadores: finalizado
 
 -> pesquisar pedidos
 
--> pesquisar produtos
+PesquisarProduto.php-> pesquisar produtos: Finalizado
 
 EditarProduto.php->Tela de edição de dados dos produtos: Finalizado
 
-EditarEntregadores.php-> Tela de edição dos dados dos entregadores
+EditarEntregadores.php-> Tela de edição dos dados dos entregadores:finalizado
 
--> Botão de logout de admonistrador e entregadores (penultima etapa): 
+-> Botão de logout de administrador e entregadores (penultima etapa)
 
 -> Criação do menu principal (etapa final)
 
