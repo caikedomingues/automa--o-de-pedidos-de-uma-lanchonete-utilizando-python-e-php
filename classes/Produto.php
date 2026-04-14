@@ -312,6 +312,71 @@
 
         }
 
+        # Função que tem como objetivo consultar os dados informados pelo
+        # usuário. Nesse caso, vamos passar um argumento por que não definimos um setter para ids, pois, esses valores são preenchidos
+        # automaticamente pelo sistema.
+        public function pesquisaProduto($id_produto){
+
+            # Ira inspecionar o bloco de código com o objetivo de
+            # capturar possiveis erros de execução.
+            try{
+
+                # Irá verificar se uma sessão foi criada antes de realizar
+                # uma consulta. Basicamente, o if irá verificar se a superglobal existe ou se o seu valor é diferente de true. 
+                if(!isset($_SESSION['login_adm']) || $_SESSION['login_adm'] != true){
+
+                    # Se essa condição for verdadeira, vamos disponibilizar para o usuário um link para voltar a página de login e imprimiremos uma mensagem.
+                    die("<p>Por favor, realize um login para pesquisar produtos</p><a href='index.php'>Voltar a página de login</a>");
+
+                }else{
+
+                    # Caso uma sessão seja criada, vamos iniciar o processo de consulta dos dados.
+
+                    # Irá conter o comando de seleção dos dados usando
+                    # o id do produto
+                    $consulta_produto = "SELECT * FROM produtos WHERE id_produto = :id_produto";
+
+                    # Irá garantir que todo comando que enviado após
+                    # o execute seja considerado como texto. Dessa forma
+                    # iremos garantir que o sistema execute apenas o
+                    # comando definido na variável.
+                    $resultado_consulta = $this->conexao->prepare($consulta_produto);
+
+                    # Ira executar o comando de consulta usando o id
+                    # que o usuário passou como argumento.
+                    $resultado_consulta->execute([':id_produto'=>$id_produto]);
+
+                    # Irá acessar todas as linhas dos dados retornados
+                    # pela consulta.
+                    $produtos = $resultado_consulta->fetchAll(PDO::FETCH_ASSOC);
+
+                    # Irá verificar se a consulta retornou dados.
+                    if($produtos){
+
+                        # Caso a consulta encontre valores, vamos retornar
+                        # os dados para atribui-los na variável definida
+                        # no arquivo PesquisarProduto.php
+                        return $produtos;
+
+                    }else{
+
+                        # Caso a consulta não encontre valores, vamos retornar uma lista vázia para a variável definida no arquivo pesquisarproduto.php 
+                        return [];
+
+                    }
+
+                }
+
+            }catch(PDOException $erro){
+
+                # Exceção que irá lidar com erros relacionados a operações
+                # no banco de dados. Nesse caso, iremos encerrar a execução e imprimir essa mensagem.
+                die("Falha na consulta dos dados: ".$erro->getMessage());
+            }
+
+
+        }
+
     }
 
 ?>

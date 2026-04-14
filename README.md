@@ -161,7 +161,7 @@ EditarProduto.php->Tela de edição de dados dos produtos: Finalizado
 
 EditarEntregadores.php-> Tela de edição dos dados dos entregadores
 
--> Botão de logout (penultima etapa): 
+-> Botão de logout de admonistrador e entregadores (penultima etapa): 
 
 -> Criação do menu principal (etapa final)
 
