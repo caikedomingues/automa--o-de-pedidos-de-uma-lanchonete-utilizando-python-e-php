@@ -418,6 +418,74 @@ class Pedidos{
 
             }
 
+            # Método que tem como objetivo permitir que o administrador pesquise informações 
+            # sobre os pedidos (entregues e a caminho). Como o código do pedido é preenchido
+            # automaticamente, não utilizamos getters e setters para acessar o valor do
+            # código do pedido. Dito isso, será necessário passar para a função um argumento
+            # que irá representar o código que queremos buscar no sistema.
+            public function buscarPedidos($codigo_pedido){
+
+                # Irá inspecionar o bloco de código com o objetivo de capturar possiveis erros de execução do bloco
+                try{
+                    
+                    # Ira verificar a existência da sessão do usuário. O if irá verificar se a superglobal
+                    # SESSSION existe ou se o seu valor é diferente de true.
+                    if(!isset($_SESSION['login_adm']) || $_SESSION['login_adm'] != true){
+                        
+                        # Se essa condição for verdadeira, vamos encerrar a execução do método e imprimir essa mensagem que contém
+                        # um link para a página de login do usuário. 
+                        die("<p>Por favor realize login para pesquisar pedidos</p> <a href='index.php'>Voltar para a página de login</a>");
+
+                    }else{
+
+                        # Se o usuário criar uma sessão, vamos iniciar o processo de consulta dos dados.
+
+                        # Ira conter o comando de consulta com um rótulo que irá representar o valor do
+                        # argumento da função.
+                        $consulta_pedidos = "SELECT * FROM pedidos WHERE codigo_pedido = :codigo_pedido";
+
+                        # Ira interpretar qualquer comando após o execute como texto. Dessa forma
+                        # o sistema irá executar apenas o comando especificado na variável
+                        # que utilizamos como argumento do prepare.
+                        $resultado_consulta = $this->conexao->prepare($consulta_pedidos);
+                       
+                        # Ira executar o comando de consulta usando o argumento definido no
+                        # método.
+                        $resultado_consulta->execute([':codigo_pedido'=>$codigo_pedido]);
+
+                        # Função que irá acessar todas as linhas encontradas e as transformará em um
+                        # array associativo que possibilitara o acesso aos dados através dos nomes
+                        # das colunas.
+                        $pedidos = $resultado_consulta->fetchAll(PDO::FETCH_ASSOC);
+
+                        # Ira verificar se a consulta encontrou dados no sistema.
+                        if($pedidos){
+
+                            # Caso a consulte encontre dados, vamos retornar esses valores com o objetivo
+                            # de atribui-los na variável criada no arquivo PesquisarPedido.php.
+                            return $pedidos;
+
+                        }else{
+
+                            # Caso a consulte não encontre dados, vamos retornar para a variável
+                            # do arquivo PesquisarPedido.php uma lista vázia, dessa forma, iremos
+                            # evitar erros de variável indefinida caso o sistema não encontre
+                            # valores
+                            return [];
+
+                        }
+                    }
+
+                }catch(PDOException $erro){
+
+                    # Exceção da biblioteca PDO que tem como objetivo lidar com erros
+                    # em operações com banco de dados. Nesse caso, iremos encerrar a
+                    # execução do método e imprimir essa mensagem.
+                    die("Falha na consulta dos dados ".$erro->getMessage());
+                }
+
+            }
+
 
 }
 

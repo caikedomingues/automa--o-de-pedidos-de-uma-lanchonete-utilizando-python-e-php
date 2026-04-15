@@ -111,8 +111,7 @@ para a entrega: finalizado
 -> O administrador poderá ver as informações sobre os produtos cadastrados: Finalizado
 
 -> Somente o administrador poderá pesquisar sobre produtos, entregadores e 
-pedidos (os pedidos poderão ser encontrados usando o cpf do cliente
-que o realizou).
+pedidos.
 
 -> O cliente deve receber o codigo ao finalizar o pedido com o objetivo
 de informa-lo ao entregador.: finalizado
@@ -153,7 +152,9 @@ InfomacoesEntregadores.php-> Botão de exclusão de entregadores: Finalizado
 
 PesquisarEntregador.php-> pesquisar entregadores: finalizado
 
--> pesquisar pedidos
+PesquisarPedido.php-> pesquisar pedidos: finalizado
+
+-> pesquisar pedidos do cliente
 
 PesquisarProduto.php-> pesquisar produtos: Finalizado
 
