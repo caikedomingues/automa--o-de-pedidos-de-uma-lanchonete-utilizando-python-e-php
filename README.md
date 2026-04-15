@@ -146,7 +146,7 @@ InformacoesProduto.php -> Tela de informações de produtos: Finalizado
 
 HistoricoEntregas.php-> historico de pedidos entregues: Finalizado
 
-InformacoesEntregadores.php-> tela de informações dos entregadores
+InformacoesEntregadores.php-> tela de informações dos entregadores: finalizado
 
 InfomacoesEntregadores.php-> Botão de exclusão de entregadores: Finalizado
 

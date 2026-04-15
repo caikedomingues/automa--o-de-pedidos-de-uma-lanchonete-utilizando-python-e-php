@@ -486,6 +486,67 @@ class Pedidos{
 
             }
 
+            # Função que irá possibilitar que o administrador pesquise os pedidos dos clientes.
+            # Como o dono pedido é inserido no ato da criação do pedido, não criamos um setter
+            # e um getter para essa coluna, pois, o cliente não irá acessar essa variável
+            # ja que o sistema coletara as informações via whatsapp, ou seja, ele não enviara
+            # os dados do pedido de forma direta. Dito isso, será necessário passar para a função
+            # um argumento que contém o cpf do dono do pedido.
+            public function buscarPedidosClientes($dono_pedido){
+
+                # Ira inspecionar o bloco de código com o objetivo de capturar possiveis erros.
+                try{
+
+                    # Ira verificar se uma sessão foi criada. O if irá verificar se a superglobal SESSION existe
+                    # ou se o seu valor é diferente de true.
+                    if(!isset($_SESSION['login_adm']) || $_SESSION['login_adm'] != true){
+
+                        # Se essa condição for verdadeira, vamos imprimir essa mensagem e encerrar a execução do método
+                        die("<p>Por favor, realize login para pesquisar os pedidos dos clientes</p><a href='index.php'>Voltar a página de login</a>");
+
+                    }else{
+
+                        # Se a sessão for criada, vamos iniciar o processo de consulta dos dados usando um rótulo
+                        # que irá representar o valor do cpf do cliente 
+                        $consulta_pedidos_clientes = "SELECT * FROM pedidos WHERE dono_pedido = :dono_pedido";
+
+                        # Ira garanitir que todo comando após o execute seja considerado como texto.
+                        $resultado_consulta = $this->conexao->prepare($consulta_pedidos_clientes);
+
+                        # Irá executar a consulta dos dados.
+                        $resultado_consulta->execute([':dono_pedido'=>$dono_pedido]);
+
+                        # Ira acessar todas as linhas de dados encontradas e criarar um array associativo.
+                        $pedido_clientes = $resultado_consulta->fetchAll(PDO::FETCH_ASSOC);
+
+                        # Ira verificar se a consulta retornou dados.
+                        if($pedido_clientes){
+
+                            # Caso a consulta encontre valores, vamos retornar a lista de valores
+                            # com o objetivo de atribuir os valores na lista criada no arquivo
+                            # PesquisarPedidosClientes.php.
+                            return $pedido_clientes;
+
+                        }else{
+                            # Caso o sistema não encontre valores, vamos retornar uma lista vázia que será
+                            # atribuida a lista do arquivo criado para a página.
+                            return [];
+                        }
+
+
+
+
+                    }
+
+                }catch(PDOException $erro){
+
+
+                    die("Falha na consulta dos dados: ".$erro->getMessage());
+
+                }
+
+            }
+
 
 }
 
