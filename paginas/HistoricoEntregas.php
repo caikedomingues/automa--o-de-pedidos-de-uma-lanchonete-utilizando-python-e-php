@@ -10,7 +10,33 @@
         <title>Lanchonete</title>
     </head>
 
-    <body class="bg-light">
+    <body class="bg-light vh-100 d-flex align-items-center justify-content-center">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-warning" href="#">
+                <i class="bi bi-shop me-2"></i>Lanchonete 
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="StatusEntrega.php">Entregas pendentes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="EditarEntregadores.php">Atualize os seus dados</a></li>    
+                   
+                </ul>
+
+                <div class="d-flex align-items-center">
+                    <span class="text-light me-3 small">
+                        <i class="bi bi-person-circle me-1"></i>Admin
+                    </span>
+                    <a href="LogoutEntregador.php" class="btn btn-outline-danger btn-sm">Sair</a>
+                </div>
+            </div>
+        </div>
+    </nav>
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-md-10">

@@ -107,6 +107,7 @@
            
             <div class="d-grid">
                 <button type="submit" class="btn btn-warning btn-lg fw-bold shadow-sm">Atualizar Informações</button>
+                <a href="InformacoesProdutos.php" class="btn btn-outline-secondary py-2 rounded-pill">Cancelar</a>
         </div>
         </form>
     </div>

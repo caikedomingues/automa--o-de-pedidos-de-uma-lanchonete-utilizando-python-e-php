@@ -65,7 +65,52 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> 
     </head>
 
-    <body>
+    <body class="bg-light vh-100 d-flex align-items-center justify-content-center">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-warning" href="#">
+                <i class="bi bi-shop me-2"></i>Lanchonete 
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="CadastroEntregador.php">Cadastro de Entregadores</a></li>
+                    <li class="nav-item"><a class="nav-link" href="CadastroProduto.php">Cadastro de Produtos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="InformacoesProdutos.php">Cardápio</a></li>
+                    
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Entregas</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="TodasEntregasRealizadas.php">Concluídas</a></li>
+                            <li><a class="dropdown-item" href="EntregasaCaminho.php">A Caminho</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Consultas</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="PesquisarEntregador.php">Entregadores</a></li>
+                            <li><a class="dropdown-item" href="PesquisarPedido.php">Pedidos</a></li>
+                             <li><a class="dropdown-item" href="PesquisarPedidosClientes.php">Pedidos dos clientes</a></li>
+                            <li><a class="dropdown-item" href="PesquisarProduto.php">Produtos</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="d-flex align-items-center">
+                    <span class="text-light me-3 small">
+                        <i class="bi bi-person-circle me-1"></i>Admin
+                    </span>
+                    <a href="LogoutAdm.php" class="btn btn-outline-danger btn-sm">Sair</a>
+                </div>
+            </div>
+        </div>
+    </nav>
         <div class="container py-5">
             <div class="position-relative mb-5 rounded-4 overflow-hidden shadow-sm" style="height: 200px;">
                 <img src="../imagens/imageminformacao.jpg" alt="imagem do entregador" class="w-100 h-100" style="object-fit: cover; filter: brightness(0.6);">
