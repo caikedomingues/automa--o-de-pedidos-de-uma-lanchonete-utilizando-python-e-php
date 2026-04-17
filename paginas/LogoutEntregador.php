@@ -1,10 +1,13 @@
 
 <?php
 
-    session_abort();
+    session_start();
 
-    $_SESSION['login_entregador'] = false;
+    $_SESSION = array();
+
+    session_destroy();
 
     header("Location: LoginEntregador.php");
+
 
 ?>

@@ -164,5 +164,5 @@ EditarEntregadores.php-> Tela de edição dos dados dos entregadores:finalizado
 
 LogoutAdm.php e LogutEntregador.php-> Botão de logout de administrador e entregadores (penultima etapa): finalizado
 
--> Criação do menu principal (etapa final)
+-> Criação do menu principal (etapa final): finalizado
 

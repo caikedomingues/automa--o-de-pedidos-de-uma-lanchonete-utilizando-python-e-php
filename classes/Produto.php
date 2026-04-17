@@ -57,7 +57,6 @@
 
         # Função que irá cadastrar os produtos no banco de dados.
         public function cadastrarProduto(){
-
             # Irá inspecionar o bloco de código com o objetivo de 
             # capturar possiveis erros de execução.
             try{
