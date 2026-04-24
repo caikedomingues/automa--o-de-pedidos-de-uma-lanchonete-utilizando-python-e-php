@@ -6,6 +6,9 @@ pelo whatsapp com o objetivo de mostra-los em uma interface feita em html, css e
                                 Usuários do sistema
                                 
                                     Administrador
+ -> Credenciais
+        Usuário: admin
+        Senha: 12345
  -> poderá ver os pedidos realizados (concluidos e não concluidos)
  
  -> podera cadastrar entregadores e produtos (os produtos irão aparacer na lista de produtos que o cliente receberá
