@@ -1,10 +1,4 @@
 
-# Criação do banco de dados que iremos utilizar no projeto
-create database lanchonete;
-
-# Irei especificar para o mysql o banco que irei utilizar no projeto
-use lanchonete;
-
 # Tabela que irá conter o cadastro dos entregadores que irão atuar no sistema para atualizar
 # status de entregas.
 create table entregadores(
@@ -103,9 +97,6 @@ insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('
 insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('coxinha', 1.00, 'salgados', 1 );
 insert into produtos(nome_produto, preco, categoria, quantidade_vendas) VALUES('misto quente', 15.90, 'lanches', 8 );
 
-# Vamos verificar se os produtos foram inseridos corretamente.
-select * from produtos;
-
 # Vamos inserir entregadores para testar a criação de pedidos através do sistema
 
 insert into entregadores(cpf_entregador, nome_entregador, telefone_entregador, veiculo, senha_entregador) values('12345678911', 'carlos', '90909678921','moto', '123456');
@@ -123,23 +114,6 @@ alter table pedidos drop column total_pedido;
 # Vou mudar a coluna de pedidos em uma coluna de preço dos pedidos.
 alter table pedidos add column preco_pedido float not null;
 
-# Verificando se as alterações nas tabelas foram realizadas com sucesso.
-describe pedidos;
-describe entregadores;
-
-# Deletei esses dados que foram inseridos no sistema de forma incorreta (resolvi esse problema no python).
-delete from pedidos where codigo_pedido = '0005';
-
-delete from pedidos where codigo_pedido = '0006';
-
-delete from pedidos where codigo_pedido = '0025';
-
-delete from pedidos where codigo_pedido = '0026';
-
-SET SQL_SAFE_UPDATES = 0;
-
-delete from pedidos;
-
 alter table pedidos add column cpf_entregador varchar(11);
 
 alter table pedidos drop column nome_entregador;
@@ -149,19 +123,9 @@ INSERT INTO pedidos( produto_pedido, dono_pedido, endereco, preco_pedido, cpf_en
 
 INSERT INTO pedidos( produto_pedido, dono_pedido, endereco, preco_pedido, cpf_entregador) VALUES('2', '98635478293', 'jardim planalto', '14','90934839021');
 
-delete from produtos where id = 5;
-
 # Vamos adicionar a quantidade de vendas o valor padrão 0 para produtos que ainda não foram vendidos;
 alter table produtos modify column quantidade_vendas int default 0; 
 
 # Como os valores antigos não recebem o default 0, vamos adiciona-los manualmente na coluna
 update produtos set quantidade_vendas = 0 where id_produto = 6;
-
-# Verificando se os dados foram inseridos corretamente.
-select * from pedidos;
-
-select * from produtos;
-
-select * from entregadores;
-
 
